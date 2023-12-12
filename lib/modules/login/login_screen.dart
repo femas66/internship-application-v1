@@ -43,15 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 login
                     .doLogin(emailController.text, passwordController.text)
                     .then((value) {
-                  print(value.status);
-                  print("NAME : ${value.email}");
                   if (value.status == 200) {
                     print("Berhasil login");
                     Navigator.pushReplacementNamed(
                         context, HomeScreen.routeName);
                   } else {
                     showErrorMessage("Username / password salah");
-                    print("Gagal login");
                   }
                 });
               },
