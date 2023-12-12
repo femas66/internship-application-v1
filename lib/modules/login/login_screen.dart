@@ -1,9 +1,13 @@
 import 'dart:ui';
 
+import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/login/botao_animado.dart';
 import 'package:pkl_apps/modules/login/input_customizado.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
+import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
@@ -13,15 +17,21 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginState();
 }
 
-class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _LoginState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
+  late LoginService loginService;
   AnimationController? _controller;
   Animation<double>? _animacaoBlur;
   Animation<double>? _animacaoFade;
   Animation<double>? _animacaoSize;
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    loginService = LoginService();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -83,7 +93,7 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                     height: 490,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("images/fundo.png"),
+                        image: AssetImage("assets/images/fundo.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -137,10 +147,12 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                           ),
                           child: Column(
                             children: [
-                              const InputCustomizado(
-                                hint: 'e-mail',
-                                obscure: false,
-                                icon: Icon(Icons.person),
+                              TextField(
+                                decoration: InputDecoration(
+                                    hintText: 'Email',
+                                    icon: Icon(Icons.person),
+                                    border: InputBorder.none),
+                                controller: emailController,
                               ),
                               Container(
                                 decoration: const BoxDecoration(
@@ -153,10 +165,12 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                                   ],
                                 ),
                               ),
-                              const InputCustomizado(
-                                hint: 'Password',
-                                obscure: true,
-                                icon: Icon(Icons.lock),
+                              TextField(
+                                decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    icon: Icon(Icons.lock),
+                                    border: InputBorder.none),
+                                controller: passwordController,
                               ),
                             ],
                           ),
@@ -164,7 +178,50 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                       },
                     ),
                     const SizedBox(height: 20),
-                    BotaoAnimado(controller: _controller!),
+                    InkWell(
+                      onTap: () {
+                        if (emailController.text.isNotEmpty &&
+                            passwordController.text.isNotEmpty) {
+                          showLoading();
+                          loginService
+                              .doLogin(
+                                  emailController.text, passwordController.text)
+                              .then((value) {
+                            stopLoading();
+                            if (value.status == 200) {
+                              Navigator.pushReplacementNamed(
+                                  context, HomeScreen.routeName);
+                            } else {
+                              showErrorMessage("Username / password salah");
+                            }
+                          });
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color.fromRGBO(48, 183, 225, 1),
+                              Color.fromRGBO(48, 183, 225, 1),
+                            ],
+                          ),
+                        ),
+                        child: SizedBox(
+                          height: 50,
+                          child: Center(
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     FadeTransition(
                       opacity: _animacaoFade!,
