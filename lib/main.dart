@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       builder: BotToastInit(),
+      debugShowCheckedModeBanner: false,
       navigatorObservers: [BotToastNavigatorObserver()],
       initialRoute: SplashScreen.routeName,
       routes: {
