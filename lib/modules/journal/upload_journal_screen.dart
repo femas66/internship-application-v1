@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/journal_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 import 'package:pkl_apps/widgets/message/successMessage.dart';
 
@@ -72,9 +73,11 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
               if (selectedFile == null || kegiatanController.text.isEmpty) {
                 showErrorMessage("Wajib di isi semua deck!");
               } else {
+                showLoading();
                 journal
                     .postJournal(kegiatanController.text, selectedFile as File)
                     .then((value) {
+                  stopLoading();
                   if (value.status == 200) {
                     showSuccessMessage("Berhasil mengirim jurnal");
                     Navigator.pushReplacementNamed(
