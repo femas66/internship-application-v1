@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,9 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           ElevatedButton(
               onPressed: () {
+                showLoading();
                 login
                     .doLogin(emailController.text, passwordController.text)
                     .then((value) {
+                  stopLoading();
                   if (value.status == 200) {
                     print("Berhasil login");
                     Navigator.pushReplacementNamed(
