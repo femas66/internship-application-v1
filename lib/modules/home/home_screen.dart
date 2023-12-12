@@ -5,6 +5,7 @@ import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 import 'package:pkl_apps/widgets/message/successMessage.dart';
 
@@ -55,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      showLoading();
                       attendance.postAttendance().then((value) {
+                        stopLoading();
                         if (value.status == 200) {
                           showSuccessMessage(value.message.toString());
                           Navigator.pushReplacementNamed(

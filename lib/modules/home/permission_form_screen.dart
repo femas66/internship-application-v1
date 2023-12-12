@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 import 'package:pkl_apps/widgets/message/successMessage.dart';
 
@@ -146,6 +147,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                     if (dari != null ||
                         sampai != null ||
                         selectedFile != null) {
+                      showLoading();
                       attendanceService
                           .postPermission(
                               '${dari!.toLocal()}'.split(' ')[0],
@@ -154,6 +156,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                               deskripsiController.text,
                               selectedFile as File)
                           .then((value) {
+                        stopLoading();
                         if (value.status == 200) {
                           showSuccessMessage(
                               "Berhasil membuat permintaan izin");
