@@ -99,7 +99,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
           ),
           SizedBox(height: 20),
           Card(
-            color: Colors.grey[300],
+                        color: Color.fromARGB(255, 224, 224, 224),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: TextField(
