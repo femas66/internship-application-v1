@@ -80,11 +80,11 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                 animation: _animacaoBlur!,
                 builder: (context, widget) {
                   return Container(
-                    height: 400,
+                    height: 490,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage("images/fundo.png"),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     child: BackdropFilter(
@@ -98,14 +98,14 @@ class _LoginState extends State<LoginScreen> with SingleTickerProviderStateMixin
                             left: 10,
                             child: FadeTransition(
                               opacity: _animacaoFade!,
-                              child: Image.asset("images/detalhe1.png"),
+                              // child: Image.asset("images/detalhe1.png"),
                             ),
                           ),
                           Positioned(
                             left: 50,
                             child: FadeTransition(
                               opacity: _animacaoFade!,
-                              child: Image.asset("images/detalhe2.png"),
+                              // child: Image.asset("images/detalhe2.png"),
                             ),
                           ),
                         ],
