@@ -168,9 +168,10 @@ class _LoginState extends State<LoginScreen>
                               TextField(
                                 decoration: InputDecoration(
                                     hintText: 'Password',
+                                    
                                     icon: Icon(Icons.lock),
                                     border: InputBorder.none),
-                                controller: passwordController,
+                                    controller: passwordController,
                               ),
                             ],
                           ),

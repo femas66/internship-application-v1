@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
+import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
-import 'package:pkl_apps/widgets/loading.dart';
-import 'package:pkl_apps/widgets/message/errorMessage.dart';
-import 'package:pkl_apps/widgets/message/successMessage.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home-screen";
-  const HomeScreen({super.key});
+
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,124 +20,128 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late LoginService login;
   late AttendanceService attendance;
+  late int _selectedIndex;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     login = LoginService();
     attendance = AttendanceService();
+    _selectedIndex = 0;
   }
 
   final box = GetStorage();
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      appBar: AppBar(
+        title: Image.asset(
+          'images/logo.png', // Ganti dengan path gambar Anda
+          width: 120, // Atur lebar gambar sesuai kebutuhan
+          height: 40, // Atur tinggi gambar sesuai kebutuhan
+        ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await login.logout();
+              Navigator.pushReplacementNamed(
+                context,
+                LoginScreen.routeName,
+              );
+            },
+            icon: Icon(
+              Icons.logout,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
         children: [
-          Column(
+          ListView(
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  login.logout().then((value) {
-                    Navigator.pushReplacementNamed(
-                        context, LoginScreen.routeName);
-                  });
-                },
-                child: Text("Logout"),
-              ),
-              Center(
-                child: Text("Selamat datang ${box.read('name')}"),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
+              Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      showLoading();
-                      attendance.postAttendance().then((value) {
-                        stopLoading();
-                        if (value.status == 200) {
-                          showSuccessMessage(value.message.toString());
-                          Navigator.pushReplacementNamed(
-                              context, HomeScreen.routeName);
-                        } else {
-                          showErrorMessage(value.message.toString());
-                        }
-                      });
-                    },
-                    child: Text("Absen"),
+                  SizedBox(height: 16),
+                  Center(
+                    child: Text(
+                      "Selamat datang, ${box.read('name')}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, PermissionFormScreen.routeName);
+                  SizedBox(height: 16),
+                  FutureBuilder<List>(
+                    future: attendance.getAttendance(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        print("Error: ${snapshot.error}");
+                        return Center(
+                          child: Text("Error: ${snapshot.error}"),
+                        );
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Center(
+                          child: Text("No data available"),
+                        );
+                      } else {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final item = snapshot.data![index];
+                            return Card(
+                              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              elevation: 2,
+                              child: ListTile(
+                                leading: Icon(Icons.calendar_today), // Ganti dengan ikon atau gambar yang sesuai
+                                title: Text(
+                                  item.information.toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  item.date.toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
-                    child: Text("Izin"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, JournalScreen.routeName);
-                    },
-                    child: Text("Jurnal"),
                   ),
                 ],
               ),
-              FutureBuilder<List>(
-                future: attendance.getAttendance(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    print("Error: ${snapshot.error}");
-                    return Center(
-                      child: Text("Error: ${snapshot.error}"),
-                    );
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text("No data available"),
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final item = snapshot.data![index];
-                        return Container(
-                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          margin: EdgeInsets.fromLTRB(4, 12, 4, 12),
-                          decoration: BoxDecoration(color: Colors.blue),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                item.information.toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  item.date.toString(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
             ],
           ),
+          PermissionFormScreen(),
+          JournalScreen(),
+          UploadJournalScreen(),
         ],
+      ),
+      bottomNavigationBar: NavBottom(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

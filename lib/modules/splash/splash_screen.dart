@@ -27,9 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Splash")),
-    );
-  }
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Image.asset(
+        'assets/gif/loading.gif', // Ganti dengan path gambar Anda
+        width: 200, // Atur lebar gambar sesuai kebutuhan
+        height: 200, // Atur tinggi gambar sesuai kebutuhan
+      ),
+    ),
+  );
+}
 }
