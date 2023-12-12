@@ -40,7 +40,8 @@ class JournalService extends SharedApi {
       var responseJson = jsonDecode(responseBody);
       print(jsonDecode(responseBody));
       return MetaModel(
-          status: responseJson['code'], message: responseJson['message']);
+          status: responseJson['meta']['code'],
+          message: responseJson['meta']['message']);
     } on Exception catch (_) {
       showErrorMessage("Periksa koneksi internet anda!");
       throw Exception("Periksa koneksi internet anda!");
