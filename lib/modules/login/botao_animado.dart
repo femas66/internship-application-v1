@@ -64,7 +64,7 @@ class BotaoAnimado extends StatelessWidget {
           child: FadeTransition(
             opacity: opacidade,
             child: const Text(
-              "Submit",
+              "Login",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,

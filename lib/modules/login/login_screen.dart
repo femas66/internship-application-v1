@@ -212,7 +212,7 @@ class _LoginState extends State<LoginScreen>
                           height: 50,
                           child: Center(
                             child: Text(
-                              "Submit",
+                              "Login",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
