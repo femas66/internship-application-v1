@@ -237,14 +237,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(6)),
-                                            color: primaryBlue,
+                                            color: (item.information
+                                                        .toString() ==
+                                                    "Hadir")
+                                                ? primaryBlue
+                                                : (item.information
+                                                            .toString() ==
+                                                        "telat")
+                                                    ? orange
+                                                    : (item.information
+                                                                .toString() ==
+                                                            "Alfa")
+                                                        ? primaryRed
+                                                        : primaryYellow,
                                           ),
                                           margin: EdgeInsets.only(left: 6),
                                           width: 40,
                                           height: 40,
                                           child: Center(
                                             child: Text(
-                                              "H",
+                                              (item.information.toString() ==
+                                                      "Hadir")
+                                                  ? "H"
+                                                  : (item.information
+                                                              .toString() ==
+                                                          "telat")
+                                                      ? "T"
+                                                      : (item.information
+                                                                  .toString() ==
+                                                              "Alfa")
+                                                          ? "A"
+                                                          : "I",
                                               style: GoogleFonts.poppins(
                                                   color: whiteColor,
                                                   fontSize: 20,
@@ -265,7 +288,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Container(
                                         decoration: BoxDecoration(
-                                            color: primaryBlue,
+                                            color: (item.information
+                                                        .toString() ==
+                                                    "Hadir")
+                                                ? primaryBlue
+                                                : (item.information
+                                                            .toString() ==
+                                                        "telat")
+                                                    ? orange
+                                                    : (item.information
+                                                                .toString() ==
+                                                            "Alfa")
+                                                        ? primaryRed
+                                                        : primaryYellow,
                                             borderRadius:
                                                 BorderRadius.circular(12)),
                                         margin: EdgeInsets.only(right: 6),
