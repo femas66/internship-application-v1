@@ -23,7 +23,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: const Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -32,7 +32,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
-                  color: primaryColor,
+                  color: primaryRed,
                   width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +40,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
                       Text(
                         "Warning",
                         style: GoogleFonts.poppins(
-                            color: textColor,
+                            color: whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
@@ -49,7 +49,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
                       ),
                       const Icon(
                         Icons.warning_amber,
-                        color: primaryColor,
+                        color: whiteColor,
                         size: 37,
                       ),
                     ],
@@ -87,7 +87,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
                   child: ElevatedButton(
                     onPressed: close,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
+                      backgroundColor: primaryRed,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(11),
                       ),
@@ -98,7 +98,7 @@ showErrorMessage(String message, {String? title = "Gagal login"}) {
                       "Kembali",
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        color: textColor,
+                        color: whiteColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
-import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
-import 'package:pkl_apps/services/attendance_service.dart';
-import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 
 class ListJournalScreen extends StatefulWidget {
   static const String routeName = "/list-journal-screen";
 
-  const ListJournalScreen({Key? key}) : super(key: key);
+  const ListJournalScreen({super.key});
 
   @override
   State<ListJournalScreen> createState() => _ListJournalScreenState();

@@ -32,7 +32,7 @@ showSuccessMessage(String message) {
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
-                  color: primaryColor,
+                  color: primaryBlue,
                   width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +40,7 @@ showSuccessMessage(String message) {
                       Text(
                         "Accepted",
                         style: GoogleFonts.poppins(
-                            color: textColor,
+                            color: whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
@@ -49,7 +49,7 @@ showSuccessMessage(String message) {
                       ),
                       const Icon(
                         Icons.check_circle_outline_outlined,
-                        color: primaryColor,
+                        color: whiteColor,
                         size: 37,
                       ),
                     ],
@@ -98,7 +98,7 @@ showSuccessMessage(String message) {
                       "Kembali",
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        color: textColor,
+                        color: whiteColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

@@ -11,6 +11,9 @@ import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
+import 'package:pkl_apps/widgets/message/errorMessage.dart';
+import 'package:pkl_apps/widgets/message/successMessage.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home-screen";
@@ -108,41 +111,63 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                color: primaryBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12))),
-                            child: Center(
-                                child: Text(
-                              "Absen",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w600),
-                            )),
+                          child: InkWell(
+                            onTap: () {
+                              showLoading();
+                              attendance.postAttendance().then((value) {
+                                stopLoading();
+                                if (value.status == 200) {
+                                  showSuccessMessage(
+                                      "Berhasil melakukan absen!");
+                                  Navigator.pushReplacementNamed(
+                                      context, HomeScreen.routeName);
+                                } else {
+                                  showErrorMessage(value.message.toString());
+                                }
+                              });
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: primaryBlue,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12))),
+                              child: Center(
+                                  child: Text(
+                                "Absen",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                            ),
                           ),
                         ),
                         SizedBox(width: 16),
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: primaryBlue,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, UploadJournalScreen.routeName);
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: primaryBlue,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
                               ),
+                              child: Center(
+                                  child: Text(
+                                "Jurnal",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.w600),
+                              )),
                             ),
-                            child: Center(
-                                child: Text(
-                              "Jurnal",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w600),
-                            )),
                           ),
                         ),
                       ],
