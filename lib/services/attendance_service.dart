@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class AttendanceService extends SharedApi {
-  Future<List> getAttendance() async {
-    Uri uri = Uri.parse("${super.baseUrl}attendance");
+  Future<List> getAttendance({String limit = "100"}) async {
+    Uri uri = Uri.parse("${super.baseUrl}attendance?limit=$limit");
     final response = await http.get(uri, headers: super.getToken());
     if (response.statusCode == 200) {
       final responseJson = jsonDecode(response.body)['data'];

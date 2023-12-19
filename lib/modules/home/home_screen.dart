@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     login = LoginService();
     attendance = AttendanceService();
-    futureListAttendace = attendance.getAttendance();
+    futureListAttendace = attendance.getAttendance(limit: "3");
     _selectedIndex = 0;
   }
 
@@ -166,12 +166,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           ],
                         ),
-                        Text(
-                          "Lihat semua",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: blackColor),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            "Lihat semua",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor),
+                          ),
                         )
                       ],
                     ),
@@ -287,53 +290,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                     Container(
-                                        decoration: BoxDecoration(
-                                            color: (item.information
-                                                        .toString() ==
-                                                    "Hadir")
-                                                ? primaryBlue
-                                                : (item.information
-                                                            .toString() ==
-                                                        "telat")
-                                                    ? orange
-                                                    : (item.information
-                                                                .toString() ==
-                                                            "Alfa")
-                                                        ? primaryRed
-                                                        : primaryYellow,
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        margin: EdgeInsets.only(right: 6),
-                                        padding:
-                                            EdgeInsets.fromLTRB(16, 6, 16, 6),
-                                        child: Center(
-                                            child: Text(
+                                      decoration: BoxDecoration(
+                                          color: (item.information.toString() ==
+                                                  "Hadir")
+                                              ? primaryBlue
+                                              : (item.information.toString() ==
+                                                      "telat")
+                                                  ? orange
+                                                  : (item.information
+                                                              .toString() ==
+                                                          "Alfa")
+                                                      ? primaryRed
+                                                      : primaryYellow,
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      margin: EdgeInsets.only(right: 6),
+                                      padding:
+                                          EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                      child: Center(
+                                        child: Text(
                                           item.information.toString(),
                                           style: GoogleFonts.poppins(
                                               fontSize: 12,
                                               color: whiteColor,
                                               fontWeight: FontWeight.w500),
-                                        ))),
+                                        ),
+                                      ),
+                                    ),
                                   ]),
                             );
-                            // child: ListTile(
-                            //   leading: Icon(Icons.calendar_today),
-                            //   title: Text(
-                            //     item.information.toString(),
-                            //     style: TextStyle(
-                            //       fontSize: 16,
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //   ),
-                            //   subtitle: Text(
-                            //     item.date.toString(),
-                            //     style: TextStyle(
-                            //       fontSize: 14,
-                            //       color: Colors.grey[600],
-                            //     ),
-                            //   ),
-                            // ),
-                            // );
                           },
                         );
                       }
