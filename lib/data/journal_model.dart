@@ -15,7 +15,10 @@ class JournalModel {
       student: StudentModel.fromJson(json['student']),
       date: json['date'],
       activity: json['activity'],
-      image: json['image'],
+      image: (json['image'] ==
+              "https://pkl.hummatech.com/storage/image/Kosong.png")
+          ? "https://static.thenounproject.com/png/4143644-200.png"
+          : json['image'],
     );
   }
 }

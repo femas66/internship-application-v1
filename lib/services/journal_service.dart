@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class JournalService extends SharedApi {
-  Future<List> getJournal() async {
-    Uri uri = Uri.parse("${super.baseUrl}journal");
+  Future<List> getJournal({String limit = "100"}) async {
+    Uri uri = Uri.parse("${super.baseUrl}journal?limit=$limit");
     final response = await http.get(uri, headers: super.getToken());
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body)['data'];
