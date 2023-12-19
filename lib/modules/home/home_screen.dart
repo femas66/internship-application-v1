@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
-import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 
@@ -20,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late LoginService login;
   late AttendanceService attendance;
+  late Future<List<dynamic>> futureListAttendace;
   late int _selectedIndex;
 
   @override
@@ -27,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     login = LoginService();
     attendance = AttendanceService();
+    futureListAttendace = attendance.getAttendance();
     _selectedIndex = 0;
   }
 
@@ -41,28 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'images/logo.png', // Ganti dengan path gambar Anda
-          width: 120, // Atur lebar gambar sesuai kebutuhan
-          height: 40, // Atur tinggi gambar sesuai kebutuhan
-        ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await login.logout();
-              Navigator.pushReplacementNamed(
-                context,
-                LoginScreen.routeName,
-              );
-            },
-            icon: Icon(
-              Icons.logout,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+      backgroundColor: whiteColor,
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -70,19 +52,135 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  SizedBox(height: 16),
-                  Center(
-                    child: Text(
-                      "Selamat datang, ${box.read('name')}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: secondaryBlue,
                     ),
+                    height: 70,
+                    width: double.infinity,
+                    child: Image.asset("assets/icons/Logo Hummatech.png"),
                   ),
                   SizedBox(height: 16),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://picsum.photos/id/237/200/300'),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                box.read('name'),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: blackColor,
+                                ),
+                              ),
+                              Text(
+                                "SMKN 1 LUMAJANG",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 11, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: primaryBlue,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Center(
+                                child: Text(
+                              "Absen",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: whiteColor,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: primaryBlue,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: Center(
+                                child: Text(
+                              "Jurnal",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: whiteColor,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.info_rounded,
+                              color: primaryBlue,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              "Absensi",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        ),
+                        Text(
+                          "Lihat semua",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: blackColor),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
                   FutureBuilder<List>(
-                    future: attendance.getAttendance(),
+                    future: futureListAttendace,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -104,27 +202,103 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final item = snapshot.data![index];
-                            return Card(
-                              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              elevation: 2,
-                              child: ListTile(
-                                leading: Icon(Icons.calendar_today), // Ganti dengan ikon atau gambar yang sesuai
-                                title: Text(
-                                  item.information.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  item.date.toString(),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                                color: whiteColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: shadowColor,
+                                    offset: const Offset(
+                                      5.0,
+                                      5.0,
+                                    ),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 2.0,
+                                  ), //BoxShadow
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ), //BoxShadow
+                                ],
                               ),
+                              padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
+                              margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(6)),
+                                            color: primaryBlue,
+                                          ),
+                                          margin: EdgeInsets.only(left: 6),
+                                          width: 40,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              "H",
+                                              style: GoogleFonts.poppins(
+                                                  color: whiteColor,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 12,
+                                        ),
+                                        Text(
+                                          item.date.toString(),
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            color: primaryBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        margin: EdgeInsets.only(right: 6),
+                                        padding:
+                                            EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                        child: Center(
+                                            child: Text(
+                                          item.information.toString(),
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              color: whiteColor,
+                                              fontWeight: FontWeight.w500),
+                                        ))),
+                                  ]),
                             );
+                            // child: ListTile(
+                            //   leading: Icon(Icons.calendar_today),
+                            //   title: Text(
+                            //     item.information.toString(),
+                            //     style: TextStyle(
+                            //       fontSize: 16,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            //   subtitle: Text(
+                            //     item.date.toString(),
+                            //     style: TextStyle(
+                            //       fontSize: 14,
+                            //       color: Colors.grey[600],
+                            //     ),
+                            //   ),
+                            // ),
+                            // );
                           },
                         );
                       }
