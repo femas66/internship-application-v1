@@ -5,6 +5,7 @@ import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
+import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
@@ -55,6 +56,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                login.logout().then((value) {
+                  Navigator.pushReplacementNamed(
+                      context, LoginScreen.routeName);
+                });
+              },
+              icon: Icon(
+                Icons.logout,
+                color: blackColor,
+              ))
+        ],
+        backgroundColor: secondaryBlue,
+        title: Image.asset(
+          "assets/icons/Logo Hummatech.png",
+          width: 200,
+        ),
+        centerTitle: true,
+      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -62,15 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: secondaryBlue,
-                    ),
-                    height: 70,
-                    width: double.infinity,
-                    child: Image.asset("assets/icons/Logo Hummatech.png"),
-                  ),
                   SizedBox(height: 16),
                   Container(
                     margin: EdgeInsets.fromLTRB(22, 0, 22, 0),

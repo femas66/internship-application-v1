@@ -42,6 +42,14 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
+      appBar: AppBar(
+        backgroundColor: secondaryBlue,
+        title: Image.asset(
+          "assets/icons/Logo Hummatech.png",
+          width: 200,
+        ),
+        centerTitle: true,
+      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -49,15 +57,6 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
             children: [
               Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: secondaryBlue,
-                    ),
-                    height: 70,
-                    width: double.infinity,
-                    child: Image.asset("assets/icons/Logo Hummatech.png"),
-                  ),
                   SizedBox(height: 16),
                   Container(
                       margin: EdgeInsets.fromLTRB(22, 0, 22, 0),

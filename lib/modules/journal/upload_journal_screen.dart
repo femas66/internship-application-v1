@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
@@ -42,7 +43,14 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Upload Jurnal")),
+      appBar: AppBar(
+        backgroundColor: secondaryBlue,
+        title: Image.asset(
+          "assets/icons/Logo Hummatech.png",
+          width: 200,
+        ),
+        centerTitle: true,
+      ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
@@ -54,7 +62,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
             ),
           ),
           Card(
-                        color: Color.fromARGB(255, 224, 224, 224),
+            color: Color.fromARGB(255, 224, 224, 224),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: TextField(
@@ -99,10 +107,12 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                 showErrorMessage("Wajib di isi semua deck!");
               } else {
                 showLoading();
-                journal.postJournal(
+                journal
+                    .postJournal(
                   kegiatanController.text,
                   selectedFile!,
-                ).then((value) {
+                )
+                    .then((value) {
                   stopLoading();
                   if (value.status == 200) {
                     showSuccessMessage("Berhasil mengirim jurnal");

@@ -1,10 +1,8 @@
-import 'dart:ui';
-
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
-import 'package:pkl_apps/modules/login/botao_animado.dart';
-import 'package:pkl_apps/modules/login/input_customizado.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
@@ -82,163 +80,104 @@ class _LoginState extends State<LoginScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              AnimatedBuilder(
-                animation: _animacaoBlur!,
-                builder: (context, widget) {
-                  return Container(
-                    height: 490,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/fundo.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: _animacaoBlur!.value,
-                        sigmaY: _animacaoBlur!.value,
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 10,
-                            child: FadeTransition(
-                              opacity: _animacaoFade!,
-                              // child: Image.asset("images/detalhe1.png"),
-                            ),
-                          ),
-                          Positioned(
-                            left: 50,
-                            child: FadeTransition(
-                              opacity: _animacaoFade!,
-                              // child: Image.asset("images/detalhe2.png"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 80,
+            ),
+            Image.asset(
+              "assets/icons/Logo Hummatech.png",
+              width: 280,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SvgPicture.asset(
+              'assets/icons/illustration-login.svg',
+              width: 300,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Login",
+                    style: GoogleFonts.poppins(
+                        color: blackColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  )),
+            ),
+            SizedBox(
+              height: 22,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: TextField(
+                controller: emailController,
+                autofocus: true,
+                decoration: InputDecoration(
+                    hintText: "Email", prefixIcon: Icon(Icons.email)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40, top: 20),
-                child: Column(
-                  children: [
-                    AnimatedBuilder(
-                      animation: _animacaoSize!,
-                      builder: (context, widget) {
-                        return Container(
-                          width: _animacaoSize?.value,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 80,
-                                spreadRadius: 1,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    icon: Icon(Icons.person),
-                                    border: InputBorder.none),
-                                controller: emailController,
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      spreadRadius: 0.5,
-                                      blurRadius: 0.5,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Password',
-                                    
-                                    icon: Icon(Icons.lock),
-                                    border: InputBorder.none),
-                                    controller: passwordController,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    InkWell(
-                      onTap: () {
-                        if (emailController.text.isNotEmpty &&
-                            passwordController.text.isNotEmpty) {
-                          showLoading();
-                          loginService
-                              .doLogin(
-                                  emailController.text, passwordController.text)
-                              .then((value) {
-                            stopLoading();
-                            if (value.status == 200) {
-                              Navigator.pushReplacementNamed(
-                                  context, HomeScreen.routeName);
-                            } else {
-                              showErrorMessage("Username / password salah");
-                            }
-                          });
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color.fromRGBO(48, 183, 225, 1),
-                              Color.fromRGBO(48, 183, 225, 1),
-                            ],
-                          ),
-                        ),
-                        child: SizedBox(
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    FadeTransition(
-                      opacity: _animacaoFade!,
-                      child: const Text(
-                        "",
-                        style: TextStyle(
-                          color: Color.fromRGBO(255, 100, 127, 1),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    hintText: "Password", prefixIcon: Icon(Icons.lock)),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 12, 30, 0),
+              child: InkWell(
+                onTap: () {
+                  if (emailController.text.isNotEmpty &&
+                      passwordController.text.isNotEmpty) {
+                    showLoading();
+                    loginService
+                        .doLogin(emailController.text, passwordController.text)
+                        .then((value) {
+                      stopLoading();
+                      if (value.status == 200) {
+                        Navigator.pushReplacementNamed(
+                            context, HomeScreen.routeName);
+                      } else {
+                        showErrorMessage("Email / password salah!");
+                        passwordController.text = "";
+                      }
+                    });
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 44,
+                  decoration: BoxDecoration(
+                      color: primaryBlue,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Text(
+                    "Login",
+                    style: GoogleFonts.poppins(
+                        color: whiteColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
