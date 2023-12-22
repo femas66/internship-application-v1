@@ -8,7 +8,6 @@ import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
-import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
@@ -520,8 +519,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           PermissionFormScreen(),
-          JournalScreen(),
-          UploadJournalScreen(),
         ],
       ),
       bottomNavigationBar: NavBottom(

@@ -10,7 +10,7 @@ import 'package:pkl_apps/widgets/message/successMessage.dart';
 
 class UploadJournalScreen extends StatefulWidget {
   static const String routeName = '/upload-journal-screen';
-  const UploadJournalScreen({Key? key}) : super(key: key);
+  const UploadJournalScreen({super.key});
 
   @override
   State<UploadJournalScreen> createState() => _UploadJournalScreenState();
@@ -52,23 +52,23 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 16.0),
-            child: Text(
+            margin: const EdgeInsets.only(bottom: 16.0),
+            child: const Text(
               "Deskripsi",
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
           ),
           Card(
-            color: Color.fromARGB(255, 224, 224, 224),
+            color: const Color.fromARGB(255, 224, 224, 224),
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: kegiatanController,
                 maxLines: 8,
-                decoration: InputDecoration.collapsed(
+                decoration: const InputDecoration.collapsed(
                   hintText: "Enter your text here",
                 ),
               ),

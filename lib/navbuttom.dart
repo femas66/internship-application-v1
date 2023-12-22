@@ -15,16 +15,12 @@ class NavBottom extends StatelessWidget {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.check),
-          label: 'Absen',
+          icon: Icon(Icons.home),
+          label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.lock),
+          icon: Icon(Icons.calendar_month_outlined),
           label: 'Izin',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.book),
-          label: 'Jurnal',
         ),
       ],
       currentIndex: selectedIndex,
@@ -37,9 +33,6 @@ class NavBottom extends StatelessWidget {
             break;
           case 1:
             Navigator.pushNamed(context, '/izin');
-            break;
-          case 2:
-            Navigator.pushNamed(context, '/jurnal');
             break;
         }
       },
