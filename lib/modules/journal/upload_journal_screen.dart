@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/journal_service.dart';
@@ -52,13 +53,24 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
         centerTitle: true,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(right: 22.0, left: 22),
         children: [
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Pengumpulan Jurnal",
+            style:
+                GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(
+            height: 30,
+          ),
           Container(
             margin: const EdgeInsets.only(bottom: 16.0),
             child: const Text(
-              "Deskripsi",
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              "Masukan Kegiatan",
+              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
             ),
           ),
           Card(
@@ -69,69 +81,163 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                 controller: kegiatanController,
                 maxLines: 8,
                 decoration: const InputDecoration.collapsed(
-                  hintText: "Enter your text here",
+                  hintText: "Kegiatan....",
                 ),
               ),
             ),
           ),
-          SizedBox(height: 16.0),
-          Container(
-            margin: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              "Bukti",
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            ),
+          SizedBox(height: 22.0),
+          Text(
+            "Bukti Pekerjaan",
+            style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
           ),
-          ElevatedButton.icon(
-            onPressed: () => _pickFiles(),
-            icon: Icon(Icons.upload_rounded),
-            label: Text("Upload"),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          SizedBox(
+            height: 12,
+          ),
+          Visibility(
+            visible: selectedFile == null,
+            child: InkWell(
+              onTap: () => _pickFiles(),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: primaryBlue,
+                    borderRadius: BorderRadius.circular(12)),
+                width: double.infinity,
+                height: 40,
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.upload_file_rounded,
+                      color: whiteColor,
+                      weight: 8,
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      "Pilih File",
+                      style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: whiteColor,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )),
               ),
             ),
           ),
-          SizedBox(height: 16.0),
-          if (selectedFile != null)
-            Container(
-              margin: EdgeInsets.all(22),
-              child: Image.file(selectedFile!),
+          Visibility(
+            visible: selectedFile != null,
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                  color: primaryBlue, borderRadius: BorderRadius.circular(12)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 12),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.file_copy,
+                          color: whiteColor,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          (selectedFile != null)
+                              ? selectedFile!.path.split('/').last
+                              : "",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: whiteColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 12),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedFile = null;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: whiteColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              if (selectedFile == null || kegiatanController.text.isEmpty) {
-                showErrorMessage("Wajib di isi semua deck!");
-              } else {
-                showLoading();
-                journal
-                    .postJournal(
-                  kegiatanController.text,
-                  selectedFile!,
-                )
-                    .then((value) {
-                  stopLoading();
-                  if (value.status == 200) {
-                    showSuccessMessage("Berhasil mengirim jurnal");
-                    Navigator.pushReplacementNamed(
-                      context,
-                      JournalScreen.routeName,
-                    );
-                  } else {
-                    showErrorMessage(value.message.toString());
-                  }
-                });
-              }
-            },
-            child: Text("Kirim"),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Visibility(
+            visible: selectedFile != null,
+            child: InkWell(
+              onTap: () {
+                if (selectedFile == null || kegiatanController.text.isEmpty) {
+                  showErrorMessage("Wajib di isi semua deck!");
+                } else {
+                  showLoading();
+                  journal
+                      .postJournal(
+                    kegiatanController.text,
+                    selectedFile!,
+                  )
+                      .then((value) {
+                    stopLoading();
+                    if (value.status == 200) {
+                      showSuccessMessage("Berhasil mengirim jurnal");
+                      Navigator.pushReplacementNamed(
+                        context,
+                        JournalScreen.routeName,
+                      );
+                    } else {
+                      showErrorMessage(value.message.toString());
+                    }
+                  });
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: primaryBlue,
+                    borderRadius: BorderRadius.circular(12)),
+                width: double.infinity,
+                height: 40,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.send_rounded,
+                        color: whiteColor,
+                        weight: 8,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Kirim",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: whiteColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

@@ -24,6 +24,8 @@ class LoginService extends SharedApi {
         box.write('isLogin', true);
         box.write('name', responseJson['data']['user']['name']);
         box.write('email', responseJson['data']['user']['email']);
+        box.write('school', responseJson['data']['user']['sekolah']);
+        box.write('photo', responseJson['data']['user']['student']['photo']);
         return UserModel.fromJson(responseJson['data']['user']);
       } else {
         return UserModel(status: jsonDecode(response.body)['meta']['code']);
@@ -40,6 +42,8 @@ class LoginService extends SharedApi {
     box.remove('token');
     box.remove('isLogin');
     box.remove('name');
-    box.remove('isLogin');
+    box.remove('email');
+    box.remove('school');
+    box.remove('photo');
   }
 }

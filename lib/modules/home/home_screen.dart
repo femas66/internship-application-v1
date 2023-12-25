@@ -89,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       children: <Widget>[
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://picsum.photos/id/237/200/300'),
+                          backgroundImage: NetworkImage(box.read('photo')),
                         ),
                         Container(
                           margin: EdgeInsets.fromLTRB(12, 0, 12, 0),
@@ -106,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Text(
-                                "SMKN 1 LUMAJANG",
+                                box.read('school'),
                                 style: GoogleFonts.poppins(
                                     fontSize: 11, fontWeight: FontWeight.w500),
                               ),
