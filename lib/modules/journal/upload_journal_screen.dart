@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
-import 'package:pkl_apps/modules/journal/journal_screen.dart';
+import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
@@ -47,7 +47,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
       appBar: AppBar(
         backgroundColor: secondaryBlue,
         title: Image.asset(
-          "assets/icons/Logo Hummatech.png",
+          "assets/icons/logo-hummatech.png",
           width: 200,
         ),
         centerTitle: true,
@@ -74,7 +74,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
             ),
           ),
           Card(
-            color: const Color.fromARGB(255, 224, 224, 224),
+            color: Color.fromARGB(255, 251, 251, 251),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -137,28 +137,34 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 12),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.file_copy,
-                          color: whiteColor,
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Text(
-                          (selectedFile != null)
-                              ? selectedFile!.path.split('/').last
-                              : "",
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 12),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.file_copy,
                             color: whiteColor,
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Expanded(
+                            child: Text(
+                              (selectedFile != null)
+                                  ? selectedFile!.path.split('/').last
+                                  : "",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -187,26 +193,30 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
             child: InkWell(
               onTap: () {
                 if (selectedFile == null || kegiatanController.text.isEmpty) {
-                  showErrorMessage("Wajib di isi semua deck!");
+                  showErrorMessage("Wajib di isi semua!");
                 } else {
-                  showLoading();
-                  journal
-                      .postJournal(
-                    kegiatanController.text,
-                    selectedFile!,
-                  )
-                      .then((value) {
-                    stopLoading();
-                    if (value.status == 200) {
-                      showSuccessMessage("Berhasil mengirim jurnal");
-                      Navigator.pushReplacementNamed(
-                        context,
-                        JournalScreen.routeName,
-                      );
-                    } else {
-                      showErrorMessage(value.message.toString());
-                    }
-                  });
+                  if (kegiatanController.text.length < 100) {
+                    showErrorMessage("Kegiatan minimal 100 karakter");
+                  } else {
+                    showLoading();
+                    journal
+                        .postJournal(
+                      kegiatanController.text,
+                      selectedFile!,
+                    )
+                        .then((value) {
+                      stopLoading();
+                      if (value.status == 200) {
+                        showSuccessMessage("Berhasil mengirim jurnal");
+                        Navigator.pushNamed(
+                          context,
+                          ListJournalScreen.routeName,
+                        );
+                      } else {
+                        showErrorMessage(value.message.toString());
+                      }
+                    });
+                  }
                 }
               },
               child: Container(

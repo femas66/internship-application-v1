@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/data/journal_model.dart';
 
 class JournalDetailScreen extends StatefulWidget {
   static const String routeName = '/journal-detail-screen';
@@ -11,21 +14,79 @@ class JournalDetailScreen extends StatefulWidget {
 class _JournalDetailScreenState extends State<JournalDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments! as Map<String, dynamic>;
-    final journal = args['journal'];
+    final journal = ModalRoute.of(context)!.settings.arguments as JournalModel;
     return Scaffold(
-      appBar: AppBar(title: Text("Detail jurnal")),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Tanggal : ${journal.date}"),
+      appBar: AppBar(
+        backgroundColor: secondaryBlue,
+        title: Image.asset(
+          "assets/icons/logo-hummatech.png",
+          width: 200,
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
+          child: Column(children: <Widget>[
             SizedBox(
-              height: 12,
+              height: 22,
             ),
-            Text("Kegiatan : ${journal.activity}"),
-            Image.network(journal.image)
+            ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(journal.image.toString())),
+            SizedBox(
+              height: 24,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Tanggal",
+                style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: blackColor,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                journal.date.toString(),
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: blackColor,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Kegiatan : ",
+                style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: blackColor,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Text(
+              journal.activity.toString(),
+              style: GoogleFonts.poppins(
+                  fontSize: 14, color: textColor, fontWeight: FontWeight.w400),
+            ),
+            SizedBox(
+              height: 24,
+            ),
           ]),
+        ),
+      ),
     );
   }
 }

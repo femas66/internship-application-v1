@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pkl_apps/modules/home/home_screen.dart';
+import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 
 class NavBottom extends StatelessWidget {
   final int selectedIndex;
@@ -29,10 +31,8 @@ class NavBottom extends StatelessWidget {
         onItemTapped(index);
         switch (index) {
           case 0:
-            Navigator.pushNamed(context, '/absen');
             break;
           case 1:
-            Navigator.pushNamed(context, '/izin');
             break;
         }
       },

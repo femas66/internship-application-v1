@@ -17,9 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       if (box.read('isLogin') ?? false == true) {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       } else {
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 200,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             margin: EdgeInsets.only(bottom: 30),
             child: Column(
@@ -56,30 +55,10 @@ class _SplashScreenState extends State<SplashScreen> {
                           fontSize: 10, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "Femas Akbar Faturrohim",
+                      "Hummatech",
                       style: GoogleFonts.poppins(
                           color: primaryBlue,
                           fontSize: 10,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Team ",
-                      style: GoogleFonts.poppins(
-                          fontSize: 8, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Yowes Iki",
-                      style: GoogleFonts.poppins(
-                          color: primaryBlue,
-                          fontSize: 8,
                           fontWeight: FontWeight.w700),
                     ),
                   ],

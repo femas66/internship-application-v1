@@ -22,6 +22,7 @@ class LoginService extends SharedApi {
         responseJson['data']['user']['code'] = 200;
         box.write('token', responseJson['data']['token']);
         box.write('isLogin', true);
+        box.write('id', responseJson['data']['user']['id']);
         box.write('name', responseJson['data']['user']['name']);
         box.write('email', responseJson['data']['user']['email']);
         box.write('school', responseJson['data']['user']['sekolah']);

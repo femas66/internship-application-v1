@@ -5,7 +5,6 @@ import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
-import 'package:pkl_apps/modules/journal/journal_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 
 class ListAttendanceScreen extends StatefulWidget {
@@ -45,7 +44,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
       appBar: AppBar(
         backgroundColor: secondaryBlue,
         title: Image.asset(
-          "assets/icons/Logo Hummatech.png",
+          "assets/icons/logo-hummatech.png",
           width: 200,
         ),
         centerTitle: true,
@@ -180,6 +179,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                       ],
                                     ),
                                     Container(
+                                      width: 70,
                                       decoration: BoxDecoration(
                                           color: (item.information.toString() ==
                                                   "Hadir")
@@ -219,7 +219,6 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
             ],
           ),
           PermissionFormScreen(),
-          JournalScreen(),
           UploadJournalScreen(),
         ],
       ),

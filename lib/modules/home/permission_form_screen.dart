@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
@@ -19,6 +22,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
   DateTime? sampai;
   TextEditingController deskripsiController = TextEditingController();
   File? selectedFile;
+  String? fileSizeMb;
   List<String> list = <String>['izin', 'sakit'];
   String dropdownValue = "izin";
 
@@ -72,104 +76,282 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Formulir Izin'),
-      ),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
           Text(
-            (dari == null) ? "Dari" : '${dari!.toLocal()}'.split(' ')[0],
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            "Halaman Izin",
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: blackColor,
+            ),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => _selectDate(context),
-            child: Text('Pilih Tanggal Mulai'),
+          SizedBox(
+            height: 24,
           ),
-          SizedBox(height: 20),
           Text(
-            (sampai == null) ? "Sampai" : '${sampai!.toLocal()}'.split(' ')[0],
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            "Dari",
+            style:
+                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => _selectSampai(context),
-            child: Text('Pilih Tanggal Sampai'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                (dari == null)
+                    ? "----/--/--"
+                    : '${dari!.toLocal()}'.split(' ')[0],
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: blackColor,
+                    fontSize: 14),
+              ),
+              InkWell(
+                onTap: () => _selectDate(context),
+                child: Container(
+                  padding: EdgeInsets.only(left: 22, right: 22),
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: primaryBlue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Pilih tanggal",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: whiteColor,
+                          fontSize: 14),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          SizedBox(height: 20),
+          SizedBox(
+            height: 24,
+          ),
+          Text(
+            "Sampai",
+            style:
+                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                (sampai == null)
+                    ? "----/--/--"
+                    : '${sampai!.toLocal()}'.split(' ')[0],
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: blackColor,
+                    fontSize: 14),
+              ),
+              InkWell(
+                onTap: () => _selectSampai(context),
+                child: Container(
+                  padding: EdgeInsets.only(left: 22, right: 22),
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: primaryBlue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Pilih tanggal",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: whiteColor,
+                          fontSize: 14),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 24),
+          Text(
+            "Deskripsikan alasannya",
+            style:
+                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(height: 12),
           Card(
-                        color: Color.fromARGB(255, 224, 224, 224),
+            color: Color.fromARGB(255, 255, 255, 255),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: TextField(
                 controller: deskripsiController,
                 maxLines: 8,
                 decoration: InputDecoration.collapsed(
-                  hintText: "Masukkan deskripsi izin",
+                  hintText: "Masukkan deskripsi...",
                 ),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => _pickFiles(),
-            child: Text("Pilih Berkas"),
+          SizedBox(height: 24),
+          Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Keterangan",
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Sakit',
+                  style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor),
+                ),
+                leading: Radio(
+                  value: list.last,
+                  groupValue: dropdownValue,
+                  onChanged: (value) {
+                    setState(() {
+                      dropdownValue = value!;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Izin',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: blackColor),
+                ),
+                leading: Radio(
+                  value: list.first,
+                  groupValue: dropdownValue,
+                  onChanged: (value) {
+                    setState(() {
+                      dropdownValue = value!;
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: const Icon(Icons.arrow_downward),
-            elevation: 16,
-            style: const TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
+          const SizedBox(height: 24),
+          Text(
+            "Bukti",
+            style:
+                GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+            visible: selectedFile == null,
+            child: InkWell(
+              onTap: () => _pickFiles(),
+              child: Container(
+                width: double.infinity,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: primaryBlue,
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Center(
+                  child: Text(
+                    "Unggah bukti",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: whiteColor,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
             ),
-            onChanged: (String? value) {
-              setState(() {
-                dropdownValue = value!;
-              });
-            },
-            items: list.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              if (dari != null || sampai != null || selectedFile != null) {
+          Visibility(
+            visible: selectedFile != null,
+            child: InkWell(
+              onTap: () => _pickFiles(),
+              child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  padding: EdgeInsets.only(left: 12, right: 12),
+                  decoration: BoxDecoration(
+                      color: primaryBlue,
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        (selectedFile != null)
+                            ? selectedFile!.path.split('/').last
+                            : "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                            color: whiteColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                      IconButton(
+                          onPressed: () => setState(() {
+                                selectedFile = null;
+                              }),
+                          icon: Icon(
+                            Icons.delete,
+                            color: whiteColor,
+                          ))
+                    ],
+                  )),
+            ),
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          InkWell(
+            onTap: () {
+              if (dari != null && sampai != null && selectedFile != null) {
                 showLoading();
                 attendanceService
                     .postPermission(
-                      '${dari!.toLocal()}'.split(' ')[0],
-                      '${sampai!.toLocal()}'.split(' ')[0],
-                      dropdownValue,
-                      deskripsiController.text,
-                      selectedFile as File,
-                    )
+                  '${dari!.toLocal()}'.split(' ')[0],
+                  '${sampai!.toLocal()}'.split(' ')[0],
+                  dropdownValue,
+                  deskripsiController.text,
+                  selectedFile as File,
+                )
                     .then((value) {
                   stopLoading();
                   if (value.status == 200) {
                     showSuccessMessage("Berhasil membuat permintaan izin");
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(
+                        context, HomeScreen.routeName);
                   } else {
                     showErrorMessage(value.message as String);
                   }
                 });
+              } else {
+                showErrorMessage("Lengkapi formnya");
               }
             },
-            child: Text("Submit"),
-          ),
-          SizedBox(height: 20),
-          if (selectedFile != null)
-            Container(
-              width: double.infinity,
-              child: Image.file(selectedFile as File),
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                  color: primaryBlue, borderRadius: BorderRadius.circular(12)),
+              child: Center(
+                child: Text(
+                  "Kirim",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      color: whiteColor,
+                      fontSize: 14),
+                ),
+              ),
             ),
+          ),
         ],
       ),
     );
