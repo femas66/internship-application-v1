@@ -17,15 +17,17 @@ class AttendanceModel {
   });
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
-    var comments = json['comment'] as List;
-    List<AttendanceDetailModel> attendanceDetails = comments
+    var attendanceDetailJson = json['detail_attendances'] as List;
+    print("DETAIL ATTENDANCE : $attendanceDetailJson");
+    List<AttendanceDetailModel> attendanceDetails = attendanceDetailJson
         .map((atndnc) => AttendanceDetailModel.fromJson(atndnc))
         .toList();
     return AttendanceModel(
-        id: json['id'],
-        student: StudentModel.fromJson(json['student']),
-        status: json['status'],
-        date: json['date'],
-        attendanceDetail: attendanceDetails);
+      id: json['id'],
+      student: StudentModel.fromJson(json['student']),
+      status: json['status'],
+      date: json['date'],
+      attendanceDetail: attendanceDetails,
+    );
   }
 }

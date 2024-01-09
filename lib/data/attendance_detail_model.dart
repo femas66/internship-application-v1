@@ -1,12 +1,12 @@
 class AttendanceDetailModel {
   int? id;
-  String? name;
+  String? status;
   String? time;
 
-  AttendanceDetailModel({this.id, this.name, this.time});
+  AttendanceDetailModel({this.id, this.status, this.time});
 
   factory AttendanceDetailModel.fromJson(Map<String, dynamic> json) {
     return AttendanceDetailModel(
-        id: json['id'], name: json['name'], time: json['time']);
+        id: json['id'], status: json['status'], time: json['time']);
   }
 }

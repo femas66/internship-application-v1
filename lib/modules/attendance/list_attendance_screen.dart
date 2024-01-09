@@ -25,7 +25,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
   void initState() {
     super.initState();
     attendance = AttendanceService();
-    futureListAttendace = attendance.getAttendance(limit: "255");
+    futureListAttendace = attendance.getAttendance();
     _selectedIndex = 0;
   }
 
@@ -71,149 +71,117 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                   SizedBox(
                     height: 22,
                   ),
-                  FutureBuilder<List>(
-                    future: futureListAttendace,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        print("Error: ${snapshot.error}");
-                        return Center(
-                          child: Text("Error: ${snapshot.error}"),
-                        );
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(
-                          child: Text("No data available"),
-                        );
-                      } else {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            final item = snapshot.data![index];
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                color: whiteColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: shadowColor,
-                                    offset: const Offset(
-                                      5.0,
-                                      5.0,
+                  FutureBuilder(
+                      future: futureListAttendace,
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return Text("Belum absen");
+                          } else {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: ((context, index) {
+                                  final item = snapshot.data![index];
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                      color: whiteColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: shadowColor,
+                                          offset: const Offset(
+                                            5.0,
+                                            5.0,
+                                          ),
+                                          blurRadius: 10.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
                                     ),
-                                    blurRadius: 10.0,
-                                    spreadRadius: 2.0,
-                                  ), //BoxShadow
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    offset: const Offset(0.0, 0.0),
-                                    blurRadius: 0.0,
-                                    spreadRadius: 0.0,
-                                  ), //BoxShadow
-                                ],
-                              ),
-                              padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                              margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                                    padding:
+                                        EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                    margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(6)),
+                                                color: primaryYellow,
+                                              ),
+                                              margin: EdgeInsets.only(left: 6),
+                                              width: 40,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  item.status,
+                                                  style: GoogleFonts.poppins(
+                                                      color: whiteColor,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Text(
+                                              item.date.toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
                                         Container(
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(6)),
-                                            color: (item.information
-                                                        .toString() ==
-                                                    "Hadir")
-                                                ? primaryBlue
-                                                : (item.information
-                                                            .toString() ==
-                                                        "telat")
-                                                    ? orange
-                                                    : (item.information
-                                                                .toString() ==
-                                                            "Alfa")
-                                                        ? primaryRed
-                                                        : primaryYellow,
-                                          ),
-                                          margin: EdgeInsets.only(left: 6),
-                                          width: 40,
-                                          height: 40,
+                                              color: primaryYellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          margin: EdgeInsets.only(right: 6),
+                                          padding:
+                                              EdgeInsets.fromLTRB(16, 6, 16, 6),
                                           child: Center(
                                             child: Text(
-                                              (item.information.toString() ==
-                                                      "Hadir")
-                                                  ? "H"
-                                                  : (item.information
-                                                              .toString() ==
-                                                          "telat")
-                                                      ? "T"
-                                                      : (item.information
-                                                                  .toString() ==
-                                                              "Alfa")
-                                                          ? "A"
-                                                          : "I",
+                                              item.status.toString(),
                                               style: GoogleFonts.poppins(
+                                                  fontSize: 12,
                                                   color: whiteColor,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Text(
-                                          item.date.toString(),
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500),
-                                        ),
                                       ],
                                     ),
-                                    Container(
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                          color: (item.information.toString() ==
-                                                  "Hadir")
-                                              ? primaryBlue
-                                              : (item.information.toString() ==
-                                                      "telat")
-                                                  ? orange
-                                                  : (item.information
-                                                              .toString() ==
-                                                          "Alfa")
-                                                      ? primaryRed
-                                                      : primaryYellow,
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      margin: EdgeInsets.only(right: 6),
-                                      padding:
-                                          EdgeInsets.fromLTRB(16, 6, 16, 6),
-                                      child: Center(
-                                        child: Text(
-                                          item.information.toString(),
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: whiteColor,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ),
-                                  ]),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
+                                  );
+                                }));
+                          }
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          print("Error: ${snapshot.error}");
+                          return Center(
+                            child: Text("Error: ${snapshot.error}"),
+                          );
+                        }
+                      })),
                 ],
               ),
             ],

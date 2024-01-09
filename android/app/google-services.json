@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "329770266632",
+    "project_id": "pkl-app-25ace",
+    "storage_bucket": "pkl-app-25ace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329770266632:android:c0d2bdc37a7092ea43e1bd",
+        "android_client_info": {
+          "package_name": "com.humamtech.pkl_apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAKPf6iu_9VNQafJuY498l4mTNS5C3--A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

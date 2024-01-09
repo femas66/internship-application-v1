@@ -8,27 +8,28 @@ import 'package:http/http.dart' as http;
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class AttendanceService extends SharedApi {
-  Future<List> getAttendance({String limit = "100"}) async {
-    Uri uri = Uri.parse("${super.baseUrl}attendance?limit=$limit");
-    final response = await http.get(uri, headers: super.getToken());
-    if (response.statusCode == 200) {
+  Future<List> getAttendance() async {
+    try {
+      Uri uri = Uri.parse("${super.baseUrl}attendance");
+      final response = await http.get(uri, headers: super.getToken());
       final responseJson = jsonDecode(response.body)['data'];
-      List result =
-          responseJson.map((e) => AttendanceModel.fromJson(e)).toList();
-
-      return result;
-    } else {
-      throw Exception("Gagal fetch absen");
+      return responseJson.map((e) => AttendanceModel.fromJson(e)).toList();
+    } on Exception catch (_) {
+      showErrorMessage("Tidak ada internet");
+      throw Exception("Tidak ada internet");
     }
   }
 
-  Future<MetaModel> postAttendance() async {
-    Uri uri = Uri.parse("${super.baseUrl}attendance");
-    final response = await http.post(uri, headers: super.getToken());
-    final responseJson = jsonDecode(response.body);
-    return MetaModel(
-        status: responseJson['meta']['code'],
-        message: responseJson['meta']['message']);
+  Future<List> getAttendanceToday() async {
+    try {
+      Uri uri = Uri.parse("${super.baseUrl}attendance-today");
+      final response = await http.get(uri, headers: super.getToken());
+      final responseJson = jsonDecode(response.body)['data'];
+      return responseJson.map((e) => AttendanceModel.fromJson(e)).toList();
+    } on Exception catch (_) {
+      showErrorMessage("Tidak ada internet");
+      throw Exception("Tidak ada internet");
+    }
   }
 
   Future<MetaModel> postPermission(String dari, String sampai,
