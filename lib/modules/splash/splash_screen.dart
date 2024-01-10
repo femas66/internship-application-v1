@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (box.read('isLogin') ?? false == true) {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       } else {
@@ -62,6 +62,11 @@ class _SplashScreenState extends State<SplashScreen> {
                           fontWeight: FontWeight.w700),
                     ),
                   ],
+                ),
+                Text(
+                  "Version 1.0.0",
+                  style: GoogleFonts.poppins(
+                      fontSize: 10, fontWeight: FontWeight.w500),
                 ),
               ],
             ),

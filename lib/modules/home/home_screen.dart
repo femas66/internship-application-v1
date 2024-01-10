@@ -206,7 +206,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data!.isEmpty) {
-                            return Text("Belum absen");
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                                color: whiteColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: shadowColor,
+                                    offset: const Offset(
+                                      5.0,
+                                      5.0,
+                                    ),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 2.0,
+                                  ), //BoxShadow
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ), //BoxShadow
+                                ],
+                              ),
+                              padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
+                              margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "Anda belum absen tab",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
                           } else {
                             if (snapshot.data![0].attendanceDetail != null) {
                               return ListView.builder(
@@ -255,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(6)),
-                                                  color: primaryYellow,
+                                                  color: primaryBlue,
                                                 ),
                                                 margin:
                                                     EdgeInsets.only(left: 6),
@@ -263,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 height: 40,
                                                 child: Center(
                                                   child: Text(
-                                                    item.status,
+                                                    'H',
                                                     style: GoogleFonts.poppins(
                                                         color: whiteColor,
                                                         fontSize: 20,
@@ -286,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                                color: primaryYellow,
+                                                color: primaryBlue,
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             margin: EdgeInsets.only(right: 6),
@@ -344,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(6)),
-                                            color: primaryYellow,
+                                            color: primaryBlue,
                                           ),
                                           margin: EdgeInsets.only(left: 6),
                                           width: 40,
@@ -372,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                          color: primaryYellow,
+                                          color: primaryBlue,
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                       margin: EdgeInsets.only(right: 6),

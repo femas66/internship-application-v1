@@ -76,7 +76,50 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data!.isEmpty) {
-                            return Text("Belum absen");
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                                color: whiteColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: shadowColor,
+                                    offset: const Offset(
+                                      5.0,
+                                      5.0,
+                                    ),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 2.0,
+                                  ), //BoxShadow
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ), //BoxShadow
+                                ],
+                              ),
+                              padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
+                              margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "Anda belum absen tab",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
                           } else {
                             return ListView.builder(
                                 shrinkWrap: true,
@@ -84,90 +127,221 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: ((context, index) {
                                   final item = snapshot.data![index];
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(12)),
-                                      color: whiteColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: shadowColor,
-                                          offset: const Offset(
-                                            5.0,
-                                            5.0,
+                                  if (item.attendanceDetail != null) {
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: item.attendanceDetail.length,
+                                      itemBuilder: ((context, index) {
+                                        final subItem =
+                                            item.attendanceDetail[index];
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12)),
+                                            color: whiteColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: shadowColor,
+                                                offset: const Offset(
+                                                  5.0,
+                                                  5.0,
+                                                ),
+                                                blurRadius: 10.0,
+                                                spreadRadius: 2.0,
+                                              ), //BoxShadow
+                                              BoxShadow(
+                                                color: Colors.white,
+                                                offset: const Offset(0.0, 0.0),
+                                                blurRadius: 0.0,
+                                                spreadRadius: 0.0,
+                                              ), //BoxShadow
+                                            ],
                                           ),
-                                          blurRadius: 10.0,
-                                          spreadRadius: 2.0,
-                                        ), //BoxShadow
-                                        BoxShadow(
-                                          color: Colors.white,
-                                          offset: const Offset(0.0, 0.0),
-                                          blurRadius: 0.0,
-                                          spreadRadius: 0.0,
-                                        ), //BoxShadow
-                                      ],
-                                    ),
-                                    padding:
-                                        EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                    margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(6)),
-                                                color: primaryYellow,
+                                          padding: EdgeInsets.fromLTRB(
+                                              12, 20, 12, 20),
+                                          margin: EdgeInsets.fromLTRB(
+                                              22, 0, 22, 12),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  6)),
+                                                      color: primaryBlue,
+                                                    ),
+                                                    margin: EdgeInsets.only(
+                                                        left: 6),
+                                                    width: 40,
+                                                    height: 40,
+                                                    child: Center(
+                                                      child: Text(
+                                                        'H',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color:
+                                                                    whiteColor,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 12,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        subItem.time.toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                      Text(
+                                                        subItem.date.toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
-                                              margin: EdgeInsets.only(left: 6),
-                                              width: 40,
-                                              height: 40,
-                                              child: Center(
-                                                child: Text(
-                                                  item.status,
-                                                  style: GoogleFonts.poppins(
-                                                      color: whiteColor,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color: primaryBlue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                margin:
+                                                    EdgeInsets.only(right: 6),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16, 6, 16, 6),
+                                                child: Center(
+                                                  child: Text(
+                                                    subItem.status.toString(),
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        color: whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                 ),
                                               ),
+                                            ],
+                                          ),
+                                        );
+                                      }),
+                                    );
+                                  } else {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                        color: whiteColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: shadowColor,
+                                            offset: const Offset(
+                                              5.0,
+                                              5.0,
                                             ),
-                                            SizedBox(
-                                              width: 12,
-                                            ),
-                                            Text(
-                                              item.date.toString(),
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: primaryYellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          margin: EdgeInsets.only(right: 6),
-                                          padding:
-                                              EdgeInsets.fromLTRB(16, 6, 16, 6),
-                                          child: Center(
-                                            child: Text(
-                                              item.status.toString(),
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  color: whiteColor,
-                                                  fontWeight: FontWeight.w500),
+                                            blurRadius: 10.0,
+                                            spreadRadius: 2.0,
+                                          ), //BoxShadow
+                                          BoxShadow(
+                                            color: Colors.white,
+                                            offset: const Offset(0.0, 0.0),
+                                            blurRadius: 0.0,
+                                            spreadRadius: 0.0,
+                                          ), //BoxShadow
+                                        ],
+                                      ),
+                                      padding:
+                                          EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                      margin:
+                                          EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(6)),
+                                                  color: primaryBlue,
+                                                ),
+                                                margin:
+                                                    EdgeInsets.only(left: 6),
+                                                width: 40,
+                                                height: 40,
+                                                child: Center(
+                                                  child: Text(
+                                                    item.status,
+                                                    style: GoogleFonts.poppins(
+                                                        color: whiteColor,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 12,
+                                              ),
+                                              Text(
+                                                item.date.toString(),
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                color: primaryBlue,
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
+                                            margin: EdgeInsets.only(right: 6),
+                                            padding: EdgeInsets.fromLTRB(
+                                                16, 6, 16, 6),
+                                            child: Center(
+                                              child: Text(
+                                                item.status.toString(),
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: whiteColor,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                        ],
+                                      ),
+                                    );
+                                  }
                                 }));
                           }
                         } else if (snapshot.connectionState ==

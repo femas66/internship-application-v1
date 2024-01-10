@@ -18,7 +18,6 @@ class AttendanceModel {
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
     var attendanceDetailJson = json['detail_attendances'] as List;
-    print("DETAIL ATTENDANCE : $attendanceDetailJson");
     List<AttendanceDetailModel> attendanceDetails = attendanceDetailJson
         .map((atndnc) => AttendanceDetailModel.fromJson(atndnc))
         .toList();
