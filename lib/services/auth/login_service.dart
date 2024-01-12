@@ -37,6 +37,27 @@ class LoginService extends SharedApi {
     }
   }
 
+  Future<void> saveFCM() async {
+    try {
+      http.patch(Uri.parse("${super.baseUrl}save-fcm"),
+          body: {
+            "fcm_token": box.read('deviceToken'),
+          },
+          headers: super.getToken());
+    } on Exception catch (_) {
+      throw Exception("Gagal simpan fcm");
+    }
+  }
+
+  Future<void> deleteFCM() async {
+    try {
+      http.patch(Uri.parse("${super.baseUrl}delete-fcm"),
+          headers: super.getToken());
+    } on Exception catch (_) {
+      throw Exception("Gagal simpan fcm");
+    }
+  }
+
   Future<void> logout() async {
     Uri uri = Uri.parse("${super.baseUrl}logout");
     await http.post(uri, headers: super.getToken());

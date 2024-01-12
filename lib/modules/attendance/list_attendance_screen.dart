@@ -41,217 +41,88 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar: AppBar(
-        backgroundColor: secondaryBlue,
-        title: Image.asset(
-          "assets/icons/logo-hummatech.png",
-          width: 200,
-        ),
-        centerTitle: true,
-      ),
-      body: IndexedStack(
-        index: _selectedIndex,
+      body: ListView(
         children: [
-          ListView(
+          Column(
             children: [
-              Column(
-                children: [
-                  SizedBox(height: 16),
-                  Container(
-                    margin: EdgeInsets.only(right: 22, left: 22),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Halaman Absensi",
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+              SizedBox(height: 16),
+              Container(
+                margin: EdgeInsets.only(right: 22, left: 22),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Halaman Absensi",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
-                    height: 22,
-                  ),
-                  FutureBuilder(
-                      future: futureListAttendace,
-                      builder: ((context, snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.isEmpty) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                color: whiteColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: shadowColor,
-                                    offset: const Offset(
-                                      5.0,
-                                      5.0,
-                                    ),
-                                    blurRadius: 10.0,
-                                    spreadRadius: 2.0,
-                                  ), //BoxShadow
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    offset: const Offset(0.0, 0.0),
-                                    blurRadius: 0.0,
-                                    spreadRadius: 0.0,
-                                  ), //BoxShadow
-                                ],
-                              ),
-                              padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                              margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
-                              child: Row(
+                ),
+              ),
+              SizedBox(
+                height: 22,
+              ),
+              FutureBuilder(
+                  future: futureListAttendace,
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data!.isEmpty) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            color: whiteColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: shadowColor,
+                                offset: const Offset(
+                                  5.0,
+                                  5.0,
+                                ),
+                                blurRadius: 10.0,
+                                spreadRadius: 2.0,
+                              ), //BoxShadow
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: const Offset(0.0, 0.0),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ), //BoxShadow
+                            ],
+                          ),
+                          padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
+                          margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Text(
-                                          "Anda belum absen tab",
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
+                                  Center(
+                                    child: Text(
+                                      "Anda belum absen tab",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ],
                               ),
-                            );
-                          } else {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: ((context, index) {
-                                  final item = snapshot.data![index];
-                                  if (item.attendanceDetail != null) {
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: item.attendanceDetail.length,
-                                      itemBuilder: ((context, index) {
-                                        final subItem =
-                                            item.attendanceDetail[index];
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(12)),
-                                            color: whiteColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: shadowColor,
-                                                offset: const Offset(
-                                                  5.0,
-                                                  5.0,
-                                                ),
-                                                blurRadius: 10.0,
-                                                spreadRadius: 2.0,
-                                              ), //BoxShadow
-                                              BoxShadow(
-                                                color: Colors.white,
-                                                offset: const Offset(0.0, 0.0),
-                                                blurRadius: 0.0,
-                                                spreadRadius: 0.0,
-                                              ), //BoxShadow
-                                            ],
-                                          ),
-                                          padding: EdgeInsets.fromLTRB(
-                                              12, 20, 12, 20),
-                                          margin: EdgeInsets.fromLTRB(
-                                              22, 0, 22, 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  6)),
-                                                      color: primaryBlue,
-                                                    ),
-                                                    margin: EdgeInsets.only(
-                                                        left: 6),
-                                                    width: 40,
-                                                    height: 40,
-                                                    child: Center(
-                                                      child: Text(
-                                                        'H',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                color:
-                                                                    whiteColor,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 12,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        subItem.time.toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                      ),
-                                                      Text(
-                                                        subItem.date.toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: primaryBlue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12)),
-                                                margin:
-                                                    EdgeInsets.only(right: 6),
-                                                padding: EdgeInsets.fromLTRB(
-                                                    16, 6, 16, 6),
-                                                child: Center(
-                                                  child: Text(
-                                                    subItem.status.toString(),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 12,
-                                                        color: whiteColor,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }),
-                                    );
-                                  } else {
+                            ],
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: ((context, index) {
+                              final item = snapshot.data![index];
+                              if (item.attendanceDetail != null) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: item.attendanceDetail.length,
+                                  itemBuilder: ((context, index) {
+                                    final subItem =
+                                        item.attendanceDetail[index];
                                     return Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
@@ -298,7 +169,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                 height: 40,
                                                 child: Center(
                                                   child: Text(
-                                                    item.status,
+                                                    'H',
                                                     style: GoogleFonts.poppins(
                                                         color: whiteColor,
                                                         fontSize: 20,
@@ -310,12 +181,25 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                               SizedBox(
                                                 width: 12,
                                               ),
-                                              Text(
-                                                item.date.toString(),
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    subItem.time.toString(),
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    subItem.date.toString(),
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
@@ -329,7 +213,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                 16, 6, 16, 6),
                                             child: Center(
                                               child: Text(
-                                                item.status.toString(),
+                                                subItem.status.toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12,
                                                     color: whiteColor,
@@ -341,32 +225,110 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                         ],
                                       ),
                                     );
-                                  }
-                                }));
-                          }
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          print("Error: ${snapshot.error}");
-                          return Center(
-                            child: Text("Error: ${snapshot.error}"),
-                          );
-                        }
-                      })),
-                ],
-              ),
+                                  }),
+                                );
+                              } else {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                    color: whiteColor,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: shadowColor,
+                                        offset: const Offset(
+                                          5.0,
+                                          5.0,
+                                        ),
+                                        blurRadius: 10.0,
+                                        spreadRadius: 2.0,
+                                      ), //BoxShadow
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        offset: const Offset(0.0, 0.0),
+                                        blurRadius: 0.0,
+                                        spreadRadius: 0.0,
+                                      ), //BoxShadow
+                                    ],
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                  margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(6)),
+                                              color: primaryBlue,
+                                            ),
+                                            margin: EdgeInsets.only(left: 6),
+                                            width: 40,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                item.status,
+                                                style: GoogleFonts.poppins(
+                                                    color: whiteColor,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            item.date.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: primaryBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        margin: EdgeInsets.only(right: 6),
+                                        padding:
+                                            EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                        child: Center(
+                                          child: Text(
+                                            item.status.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: whiteColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }));
+                      }
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      print("Error: ${snapshot.error}");
+                      return Center(
+                        child: Text("Error: ${snapshot.error}"),
+                      );
+                    }
+                  })),
             ],
           ),
-          PermissionFormScreen(),
-          UploadJournalScreen(),
         ],
-      ),
-      bottomNavigationBar: NavBottom(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
       ),
     );
   }
