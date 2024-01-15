@@ -19,6 +19,7 @@ class LoginService extends SharedApi {
           headers: super.getToken());
       if (response.statusCode == 200) {
         final responseJson = jsonDecode(response.body);
+        print("RESPONSE JSON : $responseJson");
         responseJson['data']['user']['code'] = 200;
         box.write('token', responseJson['data']['token']);
         box.write('isLogin', true);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/data/journal_model.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
@@ -12,15 +13,15 @@ import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 import 'package:pkl_apps/widgets/message/successMessage.dart';
 
-class UploadJournalScreen extends StatefulWidget {
-  static const String routeName = '/upload-journal-screen';
-  const UploadJournalScreen({super.key});
+class EditJournalScreen extends StatefulWidget {
+  static const String routeName = '/edit-journal-screen';
+  const EditJournalScreen({super.key});
 
   @override
-  State<UploadJournalScreen> createState() => _UploadJournalScreenState();
+  State<EditJournalScreen> createState() => _EditJournalScreenState();
 }
 
-class _UploadJournalScreenState extends State<UploadJournalScreen> {
+class _EditJournalScreenState extends State<EditJournalScreen> {
   late JournalService journal;
   final box = GetStorage();
   late LoginService login;
@@ -50,6 +51,9 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final journalArgs =
+        ModalRoute.of(context)!.settings.arguments as JournalModel;
+    kegiatanController.text = journalArgs.activity.toString();
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: PreferredSize(
@@ -169,7 +173,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                 border: Border.all(color: Color(0xFF9A9A9A), width: 1)),
             child: Center(
               child: Text(
-                "Tambah Jurnal",
+                "Edit Jurnal",
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500, fontSize: 16),
               ),
@@ -352,7 +356,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
               height: 40,
               child: Center(
                 child: Text(
-                  "Kirim",
+                  "Simpan",
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     color: whiteColor,

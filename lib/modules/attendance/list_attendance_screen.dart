@@ -45,20 +45,48 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
         children: [
           Column(
             children: [
-              SizedBox(height: 16),
+              const SizedBox(height: 30),
               Container(
-                margin: EdgeInsets.only(right: 22, left: 22),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Halaman Absensi",
-                    style: GoogleFonts.poppins(
-                        fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
+                margin: const EdgeInsets.only(left: 12, right: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Halaman Absen",
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF32344D)),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, PermissionFormScreen.routeName);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFF389BD6),
+                            borderRadius: BorderRadius.circular(6)),
+                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        child: Center(
+                            child: Text(
+                          "Buat Izin",
+                          style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFFFFFFFF)),
+                        )),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 22,
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 12, right: 12, top: 6, bottom: 8),
+                child: const Divider(
+                  color: Color(0xFFA1A1A1),
+                ),
               ),
               FutureBuilder(
                   future: futureListAttendace,
@@ -66,13 +94,13 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                     if (snapshot.hasData) {
                       if (snapshot.data!.isEmpty) {
                         return Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                             color: whiteColor,
                             boxShadow: [
                               BoxShadow(
                                 color: shadowColor,
-                                offset: const Offset(
+                                offset: Offset(
                                   5.0,
                                   5.0,
                                 ),
@@ -81,14 +109,14 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                               ), //BoxShadow
                               BoxShadow(
                                 color: Colors.white,
-                                offset: const Offset(0.0, 0.0),
+                                offset: Offset(0.0, 0.0),
                                 blurRadius: 0.0,
                                 spreadRadius: 0.0,
                               ), //BoxShadow
                             ],
                           ),
                           padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                          margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                          margin: EdgeInsets.fromLTRB(12, 0, 12, 12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -124,32 +152,32 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                     final subItem =
                                         item.attendanceDetail[index];
                                     return Container(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12)),
                                         color: whiteColor,
                                         boxShadow: [
                                           BoxShadow(
                                             color: shadowColor,
-                                            offset: const Offset(
+                                            offset: Offset(
                                               5.0,
                                               5.0,
                                             ),
                                             blurRadius: 10.0,
                                             spreadRadius: 2.0,
-                                          ), //BoxShadow
+                                          ),
                                           BoxShadow(
                                             color: Colors.white,
-                                            offset: const Offset(0.0, 0.0),
+                                            offset: Offset(0.0, 0.0),
                                             blurRadius: 0.0,
                                             spreadRadius: 0.0,
-                                          ), //BoxShadow
+                                          ),
                                         ],
                                       ),
-                                      padding:
-                                          EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                      margin:
-                                          EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 12, 12, 12),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          12, 0, 12, 12),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -157,28 +185,29 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                           Row(
                                             children: [
                                               Container(
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(6)),
-                                                  color: primaryBlue,
+                                                  color: Color(0x100EAD00),
                                                 ),
-                                                margin:
-                                                    EdgeInsets.only(left: 6),
-                                                width: 40,
-                                                height: 40,
+                                                margin: const EdgeInsets.only(
+                                                    left: 6),
+                                                width: 50,
+                                                height: 50,
                                                 child: Center(
                                                   child: Text(
                                                     'H',
                                                     style: GoogleFonts.poppins(
-                                                        color: whiteColor,
-                                                        fontSize: 20,
+                                                        color: const Color(
+                                                            0xFF0EAD00),
+                                                        fontSize: 28,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 12,
                                               ),
                                               Column(
@@ -186,16 +215,23 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    subItem.time.toString(),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                  Text(
                                                     subItem.date.toString(),
                                                     style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        color: const Color(
+                                                            0xFF32344D),
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 4,
+                                                  ),
+                                                  Text(
+                                                    subItem.time.toString(),
+                                                    style: GoogleFonts.poppins(
                                                         fontSize: 12,
+                                                        color: const Color(
+                                                            0xFF696969),
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
@@ -205,20 +241,21 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                                color: primaryBlue,
+                                                color: const Color(0x100EAD00),
                                                 borderRadius:
-                                                    BorderRadius.circular(12)),
-                                            margin: EdgeInsets.only(right: 6),
-                                            padding: EdgeInsets.fromLTRB(
-                                                16, 6, 16, 6),
+                                                    BorderRadius.circular(4)),
+                                            margin:
+                                                const EdgeInsets.only(right: 6),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                8, 2, 8, 2),
                                             child: Center(
                                               child: Text(
                                                 subItem.status.toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12,
-                                                    color: whiteColor,
+                                                    color: Color(0xFF0EAD00),
                                                     fontWeight:
-                                                        FontWeight.w500),
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ),

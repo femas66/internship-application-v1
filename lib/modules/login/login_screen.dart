@@ -1,12 +1,11 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
-import 'package:pkl_apps/widgets/message/successMessage.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
@@ -26,7 +25,7 @@ class _LoginState extends State<LoginScreen> {
   void initState() {
     super.initState();
     loginService = LoginService();
-    loginService.deleteFCM();
+    // loginService.deleteFCM();
   }
 
   @override
@@ -45,14 +44,14 @@ class _LoginState extends State<LoginScreen> {
         Positioned.fill(
           child: Column(
             children: [
-              Spacer(
+              const Spacer(
                 flex: 2,
               ),
               Image.asset(
                 'assets/images/logo-name.png',
                 width: 200,
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               Container(
@@ -100,6 +99,7 @@ class _LoginState extends State<LoginScreen> {
                             if (value.status == 200) {
                               Navigator.pushReplacementNamed(
                                   context, HomeScreen.routeName);
+                              return;
                             } else {
                               showErrorMessage("Email / password salah!");
                               passwordController.text = "";

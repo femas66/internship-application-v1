@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Spacer(),
+          const Spacer(),
           Center(
             child: Image.asset(
               'assets/icons/SplashLogo.png',
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           const Spacer(),
           Container(
-            margin: EdgeInsets.only(bottom: 30),
+            margin: const EdgeInsets.only(bottom: 30),
             child: Column(
               children: [
                 Row(

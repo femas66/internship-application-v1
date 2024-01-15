@@ -6,6 +6,7 @@ import 'package:pkl_apps/firebase_options.dart';
 import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
+import 'package:pkl_apps/modules/journal/edit_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         PermissionFormScreen.routeName: (context) => PermissionFormScreen(),
         ListAttendanceScreen.routeName: (context) => ListAttendanceScreen(),
         ListJournalScreen.routeName: (context) => ListJournalScreen(),
+        EditJournalScreen.routeName: (context) => EditJournalScreen(),
       },
     );
   }
