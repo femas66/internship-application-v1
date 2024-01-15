@@ -1,6 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
-import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
@@ -113,7 +112,7 @@ class _LoginState extends State<LoginScreen> {
                             color: primaryBlue,
                             border: Border.all(color: Colors.white, width: 2),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
+                                const BorderRadius.all(Radius.circular(12))),
                         child: Center(
                             child: Text(
                           "Masuk",
@@ -127,7 +126,7 @@ class _LoginState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              Spacer(
+              const Spacer(
                 flex: 3,
               ),
             ],

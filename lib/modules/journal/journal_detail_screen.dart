@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/data/journal_model.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 
 class JournalDetailScreen extends StatefulWidget {
@@ -48,17 +49,20 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
             child: PopUpMenuProfile(
               menuList: [
                 PopupMenuItem(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: const Color(0xFF32344D),
-                    ),
-                    title: Text(
-                      "Profile",
-                      style: GoogleFonts.poppins(
-                          color: const Color(0xFF32344D),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                  child: InkWell(
+                    onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: const Color(0xFF32344D),
+                      ),
+                      title: Text(
+                        "Profile",
+                        style: GoogleFonts.poppins(
+                            color: const Color(0xFF32344D),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),

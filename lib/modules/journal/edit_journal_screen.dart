@@ -7,6 +7,7 @@ import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/data/journal_model.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
@@ -25,6 +26,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
   late JournalService journal;
   final box = GetStorage();
   late LoginService login;
+  bool editable = false;
 
   @override
   void initState() {
@@ -77,17 +79,20 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
               child: PopUpMenuProfile(
                 menuList: [
                   PopupMenuItem(
-                    child: ListTile(
-                      leading: const Icon(
-                        Icons.person,
-                        color: Color(0xFF32344D),
-                      ),
-                      title: Text(
-                        "Profile",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFF32344D),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                    child: InkWell(
+                      onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.person,
+                          color: Color(0xFF32344D),
+                        ),
+                        title: Text(
+                          "Profile",
+                          style: GoogleFonts.poppins(
+                              color: const Color(0xFF32344D),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                   ),
@@ -165,12 +170,12 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
             height: 12,
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
             width: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Color(0xFF9A9A9A), width: 1)),
+                border: Border.all(color: const Color(0xFF9A9A9A), width: 1)),
             child: Center(
               child: Text(
                 "Edit Jurnal",
@@ -267,57 +272,81 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
           Visibility(
             visible: selectedFile != null,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(12, 6, 0, 6),
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
               decoration: BoxDecoration(
-                  color: primaryBlue, borderRadius: BorderRadius.circular(6)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  color: const Color(0xFFDFF3FF),
+                  borderRadius: BorderRadius.circular(6),
+                  border:
+                      Border.all(color: const Color(0xFF006DAD), width: 1.5)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+                  Container(
+                    height: 160,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                            color: const Color(0xFFFFFFFF), width: 1.5)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
                         (selectedFile != null)
-                            ? selectedFile!.path.split('/').last
-                            : "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: whiteColor,
-                        ),
+                            ? selectedFile as File
+                            : File("a"),
+                        fit: BoxFit.cover,
                       ),
-                      Text(
-                        (selectedFile != null)
-                            ? "${(selectedFile!.lengthSync() / (1024 * 1024)).toStringAsFixed(2)} MB"
-                            : "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: whiteColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedFile = null;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: whiteColor,
                     ),
                   ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            (selectedFile != null)
+                                ? selectedFile!.path.split('/').last
+                                : "",
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF006DAD),
+                            ),
+                          ),
+                          Text(
+                            (selectedFile != null)
+                                ? "${(selectedFile!.lengthSync() / (1024 * 1024)).toStringAsFixed(2)} MB"
+                                : "",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF006DAD),
+                            ),
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () => setState(() {
+                          selectedFile = null;
+                        }),
+                        child: const Icon(
+                          Icons.delete,
+                          color: Color(0xFF006DAD),
+                          size: 24,
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           InkWell(

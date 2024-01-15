@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
-import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
-import 'package:pkl_apps/navbuttom.dart';
 import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 
@@ -19,23 +17,15 @@ class ListAttendanceScreen extends StatefulWidget {
 class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
   late AttendanceService attendance;
   late Future<List<dynamic>> futureListAttendace;
-  late int _selectedIndex;
 
   @override
   void initState() {
     super.initState();
     attendance = AttendanceService();
     futureListAttendace = attendance.getAttendance();
-    _selectedIndex = 0;
   }
 
   final box = GetStorage();
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

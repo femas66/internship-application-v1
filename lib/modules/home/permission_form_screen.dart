@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/widgets/loading.dart';
@@ -107,17 +108,21 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
               child: PopUpMenuProfile(
                 menuList: [
                   PopupMenuItem(
-                    child: ListTile(
-                      leading: const Icon(
-                        Icons.person,
-                        color: Color(0xFF32344D),
-                      ),
-                      title: Text(
-                        "Profile",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFF32344D),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                    child: InkWell(
+                      onTap: () =>
+                          Navigator.pushNamed(context, ProfileScreen.routeName),
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.person,
+                          color: Color(0xFF32344D),
+                        ),
+                        title: Text(
+                          "Profile",
+                          style: GoogleFonts.poppins(
+                              color: const Color(0xFF32344D),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                   ),

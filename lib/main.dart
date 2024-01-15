@@ -11,6 +11,8 @@ import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
+import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/modules/splash/splash_screen.dart';
 import 'package:pkl_apps/utils/firebase_api.dart';
 
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         ListAttendanceScreen.routeName: (context) => ListAttendanceScreen(),
         ListJournalScreen.routeName: (context) => ListJournalScreen(),
         EditJournalScreen.routeName: (context) => EditJournalScreen(),
+        ProfileScreen.routeName: (context) => ProfileScreen(),
+        EditProfileScreen.routeName: (context) => EditProfileScreen(),
       },
     );
   }

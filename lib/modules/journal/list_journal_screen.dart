@@ -5,8 +5,6 @@ import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/edit_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
-import 'package:pkl_apps/navbuttom.dart';
-import 'package:pkl_apps/modules/home/permission_form_screen.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 
 class ListJournalScreen extends StatefulWidget {
@@ -21,23 +19,15 @@ class ListJournalScreen extends StatefulWidget {
 class _ListJournalScreenState extends State<ListJournalScreen> {
   late JournalService journalService;
   late Future<List<dynamic>> futureListJournal;
-  late int _selectedIndex;
 
   @override
   void initState() {
     super.initState();
     journalService = JournalService();
     futureListJournal = journalService.getJournal(limit: "250");
-    _selectedIndex = 0;
   }
 
   final box = GetStorage();
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
