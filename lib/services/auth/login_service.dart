@@ -60,6 +60,7 @@ class LoginService extends SharedApi {
   }
 
   Future<void> logout() async {
+    deleteFCM();
     Uri uri = Uri.parse("${super.baseUrl}logout");
     await http.post(uri, headers: super.getToken());
     box.remove('token');

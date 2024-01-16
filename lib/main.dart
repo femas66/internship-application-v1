@@ -11,6 +11,7 @@ import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/modules/splash/splash_screen.dart';
@@ -18,12 +19,14 @@ import 'package:pkl_apps/utils/firebase_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   await FirebaseApi().initNotifications();
-  await GetStorage.init();
+
   runApp(const MyApp());
 }
 
@@ -39,17 +42,20 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [BotToastNavigatorObserver()],
       initialRoute: SplashScreen.routeName,
       routes: {
-        SplashScreen.routeName: (context) => SplashScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        HomeScreen.routeName: (context) => HomeScreen(),
-        UploadJournalScreen.routeName: (context) => UploadJournalScreen(),
-        JournalDetailScreen.routeName: (context) => JournalDetailScreen(),
+        SplashScreen.routeName: (context) => const SplashScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        UploadJournalScreen.routeName: (context) => const UploadJournalScreen(),
+        JournalDetailScreen.routeName: (context) => const JournalDetailScreen(),
         PermissionFormScreen.routeName: (context) => PermissionFormScreen(),
-        ListAttendanceScreen.routeName: (context) => ListAttendanceScreen(),
-        ListJournalScreen.routeName: (context) => ListJournalScreen(),
-        EditJournalScreen.routeName: (context) => EditJournalScreen(),
-        ProfileScreen.routeName: (context) => ProfileScreen(),
-        EditProfileScreen.routeName: (context) => EditProfileScreen(),
+        ListAttendanceScreen.routeName: (context) =>
+            const ListAttendanceScreen(),
+        ListJournalScreen.routeName: (context) => const ListJournalScreen(),
+        EditJournalScreen.routeName: (context) => const EditJournalScreen(),
+        ProfileScreen.routeName: (context) => const ProfileScreen(),
+        EditProfileScreen.routeName: (context) => const EditProfileScreen(),
+        ListNotificationScreen.routeName: (context) =>
+            const ListNotificationScreen(),
       },
     );
   }

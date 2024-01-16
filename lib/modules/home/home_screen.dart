@@ -7,6 +7,7 @@ import 'package:pkl_apps/modules/journal/edit_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
@@ -74,15 +75,21 @@ class _HomeScreenState extends State<HomeScreen> {
           preferredSize: const Size.fromHeight(70),
           child: AppBar(
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16))),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+            ),
             actions: [
-              Container(
-                margin: const EdgeInsets.only(right: 12),
-                child: const Icon(
-                  Icons.notifications,
-                  color: Colors.white,
+              InkWell(
+                onTap: () => Navigator.pushNamed(
+                    context, ListNotificationScreen.routeName),
+                child: Container(
+                  margin: const EdgeInsets.only(right: 12),
+                  child: const Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Container(
@@ -210,16 +217,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 12,
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 12, right: 12),
+                      margin: const EdgeInsets.only(left: 12, right: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.all(6),
+                            padding: const EdgeInsets.all(6),
                             height: 86,
                             width: 86,
                             decoration: BoxDecoration(
-                                color: Color(0xFFE7F7E6),
+                                color: const Color(0xFFE7F7E6),
                                 borderRadius: BorderRadius.circular(6)),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "222",
                                     style: GoogleFonts.poppins(
                                         fontSize: 22,
-                                        color: Color(0xFF0EAD00),
+                                        color: const Color(0xFF0EAD00),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
@@ -244,11 +251,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ]),
                           ),
                           Container(
-                            padding: EdgeInsets.all(6),
+                            padding: const EdgeInsets.all(6),
                             height: 86,
                             width: 86,
                             decoration: BoxDecoration(
-                                color: Color(0xFFFFFAE8),
+                                color: const Color(0xFFFFFAE8),
                                 borderRadius: BorderRadius.circular(6)),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "222",
                                     style: GoogleFonts.poppins(
                                         fontSize: 22,
-                                        color: Color(0xFFFFC412),
+                                        color: const Color(0xFFFFC412),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
@@ -265,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(
+                                      color: const Color(
                                         0xFF696969,
                                       ),
                                     ),
@@ -273,11 +280,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ]),
                           ),
                           Container(
-                            padding: EdgeInsets.all(6),
+                            padding: const EdgeInsets.all(6),
                             height: 86,
                             width: 86,
                             decoration: BoxDecoration(
-                                color: Color(0xFFFDE9EB),
+                                color: const Color(0xFFFDE9EB),
                                 borderRadius: BorderRadius.circular(6)),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "222",
                                     style: GoogleFonts.poppins(
                                         fontSize: 22,
-                                        color: Color(0xFFE82135),
+                                        color: const Color(0xFFE82135),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
@@ -294,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(
+                                      color: const Color(
                                         0xFF696969,
                                       ),
                                     ),
@@ -302,11 +309,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ]),
                           ),
                           Container(
-                            padding: EdgeInsets.all(6),
+                            padding: const EdgeInsets.all(6),
                             height: 86,
                             width: 86,
                             decoration: BoxDecoration(
-                                color: Color(0xFFD2EEFF),
+                                color: const Color(0xFFD2EEFF),
                                 borderRadius: BorderRadius.circular(6)),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "222",
                                     style: GoogleFonts.poppins(
                                         fontSize: 22,
-                                        color: Color(0xFF006DAD),
+                                        color: const Color(0xFF006DAD),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
@@ -358,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 22,
                     ),
                     FutureBuilder(
@@ -367,13 +374,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (snapshot.hasData) {
                             if (snapshot.data!.isEmpty) {
                               return Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12)),
                                   color: Color(0x10FFC412),
                                 ),
-                                padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
-                                margin: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                                margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -386,14 +394,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icons.warning_amber_rounded,
                                             color: Color(0xFFFFC412),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
                                             "Belum Melakukan Absensi",
                                             style: GoogleFonts.poppins(
                                                 fontSize: 16,
-                                                color: Color(0xFFFFC412),
+                                                color: const Color(0xFFFFC412),
                                                 fontWeight: FontWeight.w600),
                                           ),
                                         ],
@@ -518,7 +526,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   subItem.status.toString(),
                                                   style: GoogleFonts.poppins(
                                                       fontSize: 12,
-                                                      color: Color(0xFF0EAD00),
+                                                      color: const Color(
+                                                          0xFF0EAD00),
                                                       fontWeight:
                                                           FontWeight.w600),
                                                 ),
@@ -531,14 +540,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               } else {
                                 final item = snapshot.data![0];
                                 return Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12)),
                                     color: whiteColor,
                                     boxShadow: [
                                       BoxShadow(
                                         color: shadowColor,
-                                        offset: const Offset(
+                                        offset: Offset(
                                           5.0,
                                           5.0,
                                         ),
@@ -547,14 +556,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ), //BoxShadow
                                       BoxShadow(
                                         color: Colors.white,
-                                        offset: const Offset(0.0, 0.0),
+                                        offset: Offset(0.0, 0.0),
                                         blurRadius: 0.0,
                                         spreadRadius: 0.0,
-                                      ), //BoxShadow
+                                      ),
                                     ],
                                   ),
-                                  padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                  margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(22, 0, 22, 12),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -562,12 +573,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Row(
                                         children: [
                                           Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(6)),
                                               color: primaryBlue,
                                             ),
-                                            margin: EdgeInsets.only(left: 6),
+                                            margin:
+                                                const EdgeInsets.only(left: 6),
                                             width: 40,
                                             height: 40,
                                             child: Center(
@@ -581,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
@@ -597,9 +609,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: primaryBlue,
                                             borderRadius:
                                                 BorderRadius.circular(12)),
-                                        margin: EdgeInsets.only(right: 6),
-                                        padding:
-                                            EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                        margin: const EdgeInsets.only(right: 6),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            16, 6, 16, 6),
                                         child: Center(
                                           child: Text(
                                             item.status,
@@ -617,11 +629,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           } else {
-                            print("Error: ${snapshot.error}");
                             return Center(
                               child: Text("Error: ${snapshot.error}"),
                             );
@@ -661,20 +672,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                             },
                             child: Container(
-                              margin: EdgeInsets.only(right: 16),
+                              margin: const EdgeInsets.only(right: 16),
                               child: Text(
                                 "Lihat semua >",
                                 style: GoogleFonts.poppins(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: Color(0xFF32344D)),
+                                    color: const Color(0xFF32344D)),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 22,
                     ),
                     FutureBuilder(
@@ -682,17 +693,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           } else if (snapshot.hasError) {
-                            print("Error: ${snapshot.error}");
                             return Center(
                               child: Text("Error: ${snapshot.error}"),
                             );
                           } else if (!snapshot.hasData ||
                               snapshot.data!.isEmpty) {
-                            return Center(
+                            return const Center(
                               child: Text("No data available"),
                             );
                           } else {
@@ -765,7 +775,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         FontWeight.w400),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 12,
                                             ),
                                             Row(
@@ -784,11 +794,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               6),
-                                                      color: Color(0x10389BD6),
+                                                      color: const Color(
+                                                          0x10389BD6),
                                                     ),
                                                     width: 30,
                                                     height: 30,
-                                                    child: Icon(
+                                                    child: const Icon(
                                                       Icons
                                                           .remove_red_eye_outlined,
                                                       color: Color(0xFF389BD6),
@@ -796,7 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 6,
                                                 ),
                                                 Visibility(
@@ -835,10 +846,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 22,
                                       ),
-                                      Container(
+                                      SizedBox(
                                           width: 100,
                                           child: Image.network(
                                               (itemJournal.image))),

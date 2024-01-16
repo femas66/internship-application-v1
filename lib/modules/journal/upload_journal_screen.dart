@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
@@ -62,11 +63,15 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16))),
           actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 12),
-              child: const Icon(
-                Icons.notifications,
-                color: Colors.white,
+            InkWell(
+              onTap: () => Navigator.pushNamed(
+                  context, ListNotificationScreen.routeName),
+              child: Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                ),
               ),
             ),
             Container(

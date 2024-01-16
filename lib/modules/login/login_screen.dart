@@ -24,7 +24,6 @@ class _LoginState extends State<LoginScreen> {
   void initState() {
     super.initState();
     loginService = LoginService();
-    // loginService.deleteFCM();
   }
 
   @override

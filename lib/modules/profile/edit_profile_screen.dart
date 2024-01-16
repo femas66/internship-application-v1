@@ -198,28 +198,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     const SizedBox(
                       height: 12,
                     ),
-                    TextField(
-                      decoration: InputDecoration(hintText: "04727427247"),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: 186,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF389BD6),
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Center(
-                          child: Text(
-                            "Cek Surat Peringatan",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
+                    SizedBox(
+                      height: 40,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+                          hintText: "04727427247",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Color(0xFF068DDC)),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Color(0xFF068DDC)),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 24),
+                      width: double.infinity,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF389BD6),
+                          borderRadius: BorderRadius.circular(6)),
+                      child: Center(
+                        child: Text(
+                          "Simpan",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

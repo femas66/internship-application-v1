@@ -7,6 +7,7 @@ import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/data/journal_model.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
@@ -67,11 +68,15 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16))),
           actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 12),
-              child: const Icon(
-                Icons.notifications,
-                color: Colors.white,
+            InkWell(
+              onTap: () => Navigator.pushNamed(
+                  context, ListNotificationScreen.routeName),
+              child: Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                ),
               ),
             ),
             Container(
@@ -80,7 +85,8 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
                 menuList: [
                   PopupMenuItem(
                     child: InkWell(
-                      onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
+                      onTap: () =>
+                          Navigator.pushNamed(context, ProfileScreen.routeName),
                       child: ListTile(
                         leading: const Icon(
                           Icons.person,

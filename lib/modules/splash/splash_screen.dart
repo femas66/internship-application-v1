@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       if (box.read('isLogin') ?? false == true) {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       } else {

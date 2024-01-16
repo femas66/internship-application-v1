@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/data/journal_model.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/widgets/loading.dart';
 
 class JournalDetailScreen extends StatefulWidget {
   static const String routeName = '/journal-detail-screen';
@@ -30,101 +31,114 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
     final journal = ModalRoute.of(context)!.settings.arguments as JournalModel;
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16))),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 12),
-            child: const Icon(
-              Icons.notifications,
-              color: Colors.white,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 12),
-            child: PopUpMenuProfile(
-              menuList: [
-                PopupMenuItem(
-                  child: InkWell(
-                    onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.person,
-                        color: const Color(0xFF32344D),
-                      ),
-                      title: Text(
-                        "Profile",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFF32344D),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: AppBar(
+          leading: const BackButton(color: Colors.white),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16))),
+          actions: [
+            InkWell(
+              onTap: () => Navigator.pushNamed(
+                  context, ListNotificationScreen.routeName),
+              child: Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
                 ),
-                const PopupMenuDivider(),
-                PopupMenuItem(
-                  child: InkWell(
-                    onTap: () => login.logout().then((value) {
-                      Navigator.pushReplacementNamed(
-                          context, LoginScreen.routeName);
-                    }),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.output_rounded,
-                        color: Color(0xFFE82135),
-                      ),
-                      title: Text(
-                        "Logout",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFFE82135),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              icon: CircleAvatar(
-                backgroundImage: NetworkImage(box.read('photo')),
               ),
             ),
-          ),
-        ],
-        backgroundColor: const Color(0xFF389BD6),
-        title: Row(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    box.read('name'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
+            Container(
+              margin: const EdgeInsets.only(right: 12),
+              child: PopUpMenuProfile(
+                menuList: [
+                  PopupMenuItem(
+                    child: InkWell(
+                      onTap: () =>
+                          Navigator.pushNamed(context, ProfileScreen.routeName),
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.person,
+                          color: Color(0xFF32344D),
+                        ),
+                        title: Text(
+                          "Profile",
+                          style: GoogleFonts.poppins(
+                              color: const Color(0xFF32344D),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
-                  Text(
-                    box.read('school'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
+                  const PopupMenuDivider(),
+                  PopupMenuItem(
+                    child: InkWell(
+                      onTap: () {
+                        showLoading();
+                        login.logout().then((value) {
+                          stopLoading();
+                          Navigator.pop(context);
+                          Navigator.pushReplacementNamed(
+                              context, LoginScreen.routeName);
+                        });
+                      },
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.output_rounded,
+                          color: Color(0xFFE82135),
+                        ),
+                        title: Text(
+                          "Logout",
+                          style: GoogleFonts.poppins(
+                              color: const Color(0xFFE82135),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
+                icon: CircleAvatar(
+                  backgroundImage: NetworkImage(box.read('photo')),
+                ),
               ),
             ),
           ],
+          backgroundColor: const Color(0xFF389BD6),
+          title: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      box.read('name'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      box.read('school'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
