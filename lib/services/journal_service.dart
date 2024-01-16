@@ -38,7 +38,6 @@ class JournalService extends SharedApi {
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
       var responseJson = jsonDecode(responseBody);
-      print(responseBody);
       return MetaModel(
           status: responseJson['code'] ?? responseJson['meta']['code'] ?? 400,
           message: responseJson['message'] ?? responseJson['meta']['message']);

@@ -17,6 +17,8 @@ import 'package:pkl_apps/widgets/message/successMessage.dart';
 class PermissionFormScreen extends StatefulWidget {
   static const String routeName = '/permission-form-screen';
 
+  const PermissionFormScreen({super.key});
+
   @override
   State<PermissionFormScreen> createState() => _PermissionFormScreenState();
 }
@@ -199,18 +201,18 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(
             height: 12,
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
             width: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Color(0xFF9A9A9A), width: 1)),
+                border: Border.all(color: const Color(0xFF9A9A9A), width: 1)),
             child: Center(
               child: Text(
                 "Tambah Izin",
@@ -267,12 +269,12 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(left: 12, right: 12),
+            margin: const EdgeInsets.only(left: 12, right: 12),
           ),
           const Divider(
             color: Color(0xFF389BD6),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Text(
@@ -339,7 +341,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
             controller: deskripsiController,
             decoration: const InputDecoration(hintText: "Deskripsi"),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Column(
             children: [
               Align(
@@ -408,7 +410,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                 decoration: BoxDecoration(
                     border:
                         Border.all(color: const Color(0xFF068DDC), width: 2),
-                    borderRadius: BorderRadius.all(Radius.circular(6))),
+                    borderRadius: const BorderRadius.all(Radius.circular(6))),
                 child: Row(
                   children: <Widget>[
                     Container(
@@ -447,8 +449,8 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
               child: Container(
                   width: double.infinity,
                   height: 60,
-                  padding: EdgeInsets.only(left: 12, right: 12),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.only(left: 12, right: 12),
+                  decoration: const BoxDecoration(
                       color: primaryBlue,
                       borderRadius: BorderRadius.all(Radius.circular(12))),
                   child: Row(
@@ -469,7 +471,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                           onPressed: () => setState(() {
                                 selectedFile = null;
                               }),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.delete,
                             color: whiteColor,
                           ))
@@ -477,7 +479,7 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           InkWell(

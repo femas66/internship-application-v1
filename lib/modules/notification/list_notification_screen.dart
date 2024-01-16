@@ -27,8 +27,8 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
-        shape: RoundedRectangleBorder(
+        iconTheme: const IconThemeData(color: Color(0xFFFFFFFF)),
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16))),
@@ -49,9 +49,9 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
                     onTap: () =>
                         Navigator.pushNamed(context, ProfileScreen.routeName),
                     child: ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.person,
-                        color: const Color(0xFF32344D),
+                        color: Color(0xFF32344D),
                       ),
                       title: Text(
                         "Profile",
@@ -71,7 +71,7 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
                           context, LoginScreen.routeName);
                     }),
                     child: ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.output_rounded,
                         color: Color(0xFFE82135),
                       ),
@@ -132,7 +132,7 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
               height: 12,
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+              padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
               width: double.infinity,
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -150,9 +150,9 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
               height: 22,
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Color(0xFFC3E9FF),
+                color: const Color(0xFFC3E9FF),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Column(
@@ -187,7 +187,7 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
                       style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xFF555555)),
+                          color: const Color(0xFF555555)),
                     ),
                   ),
                 ],

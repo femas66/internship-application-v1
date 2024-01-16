@@ -21,7 +21,6 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
   late LoginService login;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     login = LoginService();
   }
@@ -143,18 +142,18 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
           child: Column(children: <Widget>[
             const SizedBox(
               height: 12,
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+              padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
               width: double.infinity,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Color(0xFF9A9A9A), width: 1)),
+                  border: Border.all(color: const Color(0xFF9A9A9A), width: 1)),
               child: Center(
                 child: Text(
                   "Detail Jurnal",
@@ -169,7 +168,7 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
             ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(journal.image.toString())),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Align(
@@ -182,7 +181,7 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
             Align(

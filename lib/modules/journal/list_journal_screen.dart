@@ -44,15 +44,15 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                 onTap: () =>
                     Navigator.pushNamed(context, UploadJournalScreen.routeName),
                 child: Container(
-                  margin: EdgeInsets.only(left: 12, right: 12),
+                  margin: const EdgeInsets.only(left: 12, right: 12),
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(6),
                         border:
-                            Border.all(color: Color(0xFF389BD6), width: 1.5)),
+                            Border.all(color: const Color(0xFF389BD6), width: 1.5)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -120,23 +120,22 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                   future: futureListJournal,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (snapshot.hasError) {
-                      print("Error: ${snapshot.error}");
                       return Center(
                         child: Text("Error: ${snapshot.error}"),
                       );
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Center(
+                      return const Center(
                         child: Text("No data available"),
                       );
                     } else {
                       final dataJournal = snapshot.data!;
                       return ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: dataJournal.length,
                         itemBuilder: (context, index) {
                           final itemJournal = dataJournal[index];
@@ -196,7 +195,7 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                               fontWeight: FontWeight.w400),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 12,
                                       ),
                                       Row(
@@ -213,18 +212,18 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(6),
-                                                color: Color(0x10389BD6),
+                                                color: const Color(0x10389BD6),
                                               ),
                                               width: 30,
                                               height: 30,
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.remove_red_eye_outlined,
                                                 color: Color(0xFF389BD6),
                                                 size: 20,
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 6,
                                           ),
                                           Visibility(
@@ -239,11 +238,11 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(6),
-                                                  color: Color(0x10FFC412),
+                                                  color: const Color(0x10FFC412),
                                                 ),
                                                 width: 30,
                                                 height: 30,
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.edit,
                                                   color: Color(0xFFFFC412),
                                                   size: 20,
@@ -256,10 +255,10 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 22,
                                 ),
-                                Container(
+                                SizedBox(
                                     width: 100,
                                     child: Image.network((itemJournal.image))),
                               ],

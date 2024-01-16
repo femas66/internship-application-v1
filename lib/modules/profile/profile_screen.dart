@@ -105,14 +105,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onTap: () => Navigator.pushNamed(
                                         context, EditProfileScreen.routeName),
                                     child: Container(
-                                        padding: EdgeInsets.all(4),
+                                        padding: const EdgeInsets.all(4),
                                         decoration: BoxDecoration(
                                             color: const Color(0xFF389BD6),
                                             border: Border.all(
                                                 color: Colors.white, width: 4),
                                             borderRadius:
                                                 BorderRadius.circular(100)),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.mode_edit_outline_outlined,
                                           color: Colors.white,
                                           size: 20,

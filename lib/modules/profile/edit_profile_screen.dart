@@ -202,23 +202,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       height: 40,
                       child: TextField(
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+                          contentPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
                           hintText: "04727427247",
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(width: 2, color: Color(0xFF068DDC)),
+                                const BorderSide(width: 2, color: Color(0xFF068DDC)),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(width: 2, color: Color(0xFF068DDC)),
+                                const BorderSide(width: 2, color: Color(0xFF068DDC)),
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 24),
+                      margin: const EdgeInsets.only(top: 24),
                       width: double.infinity,
                       height: 40,
                       decoration: BoxDecoration(

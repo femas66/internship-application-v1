@@ -8,7 +8,7 @@ import 'package:pkl_apps/services/attendance_service.dart';
 class ListAttendanceScreen extends StatefulWidget {
   static const String routeName = "/list-attendance-screen";
 
-  const ListAttendanceScreen({Key? key}) : super(key: key);
+  const ListAttendanceScreen({super.key});
 
   @override
   State<ListAttendanceScreen> createState() => _ListAttendanceScreenState();
@@ -55,9 +55,9 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Color(0xFF389BD6),
+                            color: const Color(0xFF389BD6),
                             borderRadius: BorderRadius.circular(6)),
-                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                         child: Center(
                             child: Text(
                           "Buat Izin",
@@ -105,8 +105,8 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                               ), //BoxShadow
                             ],
                           ),
-                          padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                          margin: EdgeInsets.fromLTRB(12, 0, 12, 12),
+                          padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                          margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -243,7 +243,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                 subItem.status.toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12,
-                                                    color: Color(0xFF0EAD00),
+                                                    color: const Color(0xFF0EAD00),
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -256,14 +256,14 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                 );
                               } else {
                                 return Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12)),
                                     color: whiteColor,
                                     boxShadow: [
                                       BoxShadow(
                                         color: shadowColor,
-                                        offset: const Offset(
+                                        offset: Offset(
                                           5.0,
                                           5.0,
                                         ),
@@ -272,14 +272,14 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                       ), //BoxShadow
                                       BoxShadow(
                                         color: Colors.white,
-                                        offset: const Offset(0.0, 0.0),
+                                        offset: Offset(0.0, 0.0),
                                         blurRadius: 0.0,
                                         spreadRadius: 0.0,
                                       ), //BoxShadow
                                     ],
                                   ),
-                                  padding: EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                  margin: EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                  padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                  margin: const EdgeInsets.fromLTRB(22, 0, 22, 12),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -287,12 +287,12 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                       Row(
                                         children: [
                                           Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(6)),
                                               color: primaryBlue,
                                             ),
-                                            margin: EdgeInsets.only(left: 6),
+                                            margin: const EdgeInsets.only(left: 6),
                                             width: 40,
                                             height: 40,
                                             child: Center(
@@ -306,7 +306,7 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
@@ -322,9 +322,9 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                             color: primaryBlue,
                                             borderRadius:
                                                 BorderRadius.circular(12)),
-                                        margin: EdgeInsets.only(right: 6),
+                                        margin: const EdgeInsets.only(right: 6),
                                         padding:
-                                            EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                            const EdgeInsets.fromLTRB(16, 6, 16, 6),
                                         child: Center(
                                           child: Text(
                                             item.status.toString(),
@@ -343,11 +343,10 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                       }
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      print("Error: ${snapshot.error}");
                       return Center(
                         child: Text("Error: ${snapshot.error}"),
                       );
