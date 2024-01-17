@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/services/notification/notification_service.dart';
 
 class ListNotificationScreen extends StatefulWidget {
   static const String routeName = '/list-notification-screen';
@@ -16,9 +17,15 @@ class ListNotificationScreen extends StatefulWidget {
 class _ListNotificationScreenState extends State<ListNotificationScreen> {
   final box = GetStorage();
   late LoginService login;
+  late NotificationService notification;
+
+  late Future<List> futureListNotification;
+
   @override
   void initState() {
     super.initState();
+    notification = NotificationService();
+    futureListNotification = notification.getNotification();
     login = LoginService();
   }
 
@@ -149,50 +156,73 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
             const SizedBox(
               height: 22,
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color(0xFFC3E9FF),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "fewfae",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFF32344D),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16),
-                      ),
-                      Text(
-                        "fewfae",
-                        style: GoogleFonts.poppins(
-                            color: const Color(0xFF32344D),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "fewa",
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF555555)),
-                    ),
-                  ),
-                ],
-              ),
-            )
+            FutureBuilder(
+                future: futureListNotification,
+                builder: (((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final item = snapshot.data![index];
+                          return Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFC3E9FF),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      item.title,
+                                      style: GoogleFonts.poppins(
+                                          color: const Color(0xFF32344D),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    ),
+                                    Text(
+                                      item.createdAt,
+                                      style: GoogleFonts.poppins(
+                                          color: const Color(0xFF32344D),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    item.message,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF555555)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return Center(
+                      child: Text("Error: ${snapshot.error}"),
+                    );
+                  }
+                })))
           ]),
         ),
       ),

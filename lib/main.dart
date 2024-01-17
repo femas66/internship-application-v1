@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pkl_apps/firebase_options.dart';
 import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
@@ -27,6 +28,7 @@ void main() async {
   );
 
   await FirebaseApi().initNotifications();
+  await dotenv.load(fileName: ".env");
 
   runApp(const MyApp());
 }
@@ -58,7 +60,8 @@ class MyApp extends StatelessWidget {
         EditProfileScreen.routeName: (context) => const EditProfileScreen(),
         ListNotificationScreen.routeName: (context) =>
             const ListNotificationScreen(),
-        StatementLetterScreen.routeName: (context) => const StatementLetterScreen()
+        StatementLetterScreen.routeName: (context) =>
+            const StatementLetterScreen()
       },
     );
   }

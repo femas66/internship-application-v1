@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/data/dashboard_statistic.dart';
 import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/journal/edit_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
@@ -11,6 +12,7 @@ import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/attendance_service.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
+import 'package:pkl_apps/services/dashboard_service.dart';
 import 'package:pkl_apps/services/journal_service.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
@@ -51,13 +53,17 @@ class _HomeScreenState extends State<HomeScreen> {
   late LoginService login;
   late JournalService journalService;
   late AttendanceService attendance;
+  late DashboardService dashboardService;
   late Future<List> futureListAttendaceToday;
+  late Future<DashboardStatistic> futureStatistic;
   late Future<List<dynamic>> futureListJournal;
 
   @override
   void initState() {
     super.initState();
     login = LoginService();
+    dashboardService = DashboardService();
+    futureStatistic = dashboardService.getDashboardStatistic();
     login.saveFCM();
     journalService = JournalService();
     attendance = AttendanceService();
@@ -216,130 +222,152 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 12,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 12, right: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.all(6),
-                            height: 86,
-                            width: 86,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFE7F7E6),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "222",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 22,
-                                        color: const Color(0xFF0EAD00),
-                                        fontWeight: FontWeight.w700),
+                    FutureBuilder(
+                        future: futureStatistic,
+                        builder: ((context, snapshot) {
+                          if (snapshot.hasData) {
+                            final item = snapshot.data!;
+                            return Container(
+                              margin:
+                                  const EdgeInsets.only(left: 12, right: 12),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(6),
+                                    height: 86,
+                                    width: 86,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFE7F7E6),
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.present.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 22,
+                                                color: const Color(0xFF0EAD00),
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "Total Hadir",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: const Color(
+                                                0xFF696969,
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
                                   ),
-                                  Text(
-                                    "Total Hadir",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(
-                                        0xFF696969,
-                                      ),
-                                    ),
+                                  Container(
+                                    padding: const EdgeInsets.all(6),
+                                    height: 86,
+                                    width: 86,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFFFFAE8),
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.permission.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 22,
+                                                color: const Color(0xFFFFC412),
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "Total Izin",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: const Color(
+                                                0xFF696969,
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
                                   ),
-                                ]),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(6),
-                            height: 86,
-                            width: 86,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFFFFAE8),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "222",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 22,
-                                        color: const Color(0xFFFFC412),
-                                        fontWeight: FontWeight.w700),
+                                  Container(
+                                    padding: const EdgeInsets.all(6),
+                                    height: 86,
+                                    width: 86,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFFDE9EB),
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.alpha.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 22,
+                                                color: const Color(0xFFE82135),
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "Total Alpha",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: const Color(
+                                                0xFF696969,
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
                                   ),
-                                  Text(
-                                    "Total Izin",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(
-                                        0xFF696969,
-                                      ),
-                                    ),
+                                  Container(
+                                    padding: const EdgeInsets.all(6),
+                                    height: 86,
+                                    width: 86,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFD2EEFF),
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.journal.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 22,
+                                                color: const Color(0xFF006DAD),
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "Total Jurnal",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: const Color(
+                                                0xFF696969,
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
                                   ),
-                                ]),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(6),
-                            height: 86,
-                            width: 86,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFFDE9EB),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "222",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 22,
-                                        color: const Color(0xFFE82135),
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    "Total Alpha",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(
-                                        0xFF696969,
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(6),
-                            height: 86,
-                            width: 86,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFD2EEFF),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "222",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 22,
-                                        color: const Color(0xFF006DAD),
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    "Total Jurnal",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(
-                                        0xFF696969,
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ],
-                      ),
-                    ),
+                                ],
+                              ),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            return Center(
+                              child: Text("Error: ${snapshot.error}"),
+                            );
+                          }
+                        })),
                     const SizedBox(
                       height: 32,
                     ),

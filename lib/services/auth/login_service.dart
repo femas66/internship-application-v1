@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
-import 'package:pkl_apps/data/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:pkl_apps/data/entities/user_response.dart';
+import 'package:pkl_apps/data/user.dart';
 import 'package:pkl_apps/utils/api.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class LoginService extends SharedApi {
   final box = GetStorage();
-  Future<UserModel> doLogin(String email, String password) async {
+  Future<User> doLogin(String email, String password) async {
     try {
       Uri uri = Uri.parse("${super.baseUrl}login");
       http.Response response = await http.post(uri,
@@ -27,9 +28,10 @@ class LoginService extends SharedApi {
         box.write('email', responseJson['data']['user']['email']);
         box.write('school', responseJson['data']['user']['sekolah']);
         box.write('photo', responseJson['data']['user']['student']['photo']);
-        return UserModel.fromJson(responseJson['data']['user']);
+        return UserResponse.fromJson(responseJson['data']['user']).toUser();
       } else {
-        return UserModel(status: jsonDecode(response.body)['meta']['code']);
+        return UserResponse(status: jsonDecode(response.body)['meta']['code'])
+            .toUser();
       }
     } on Exception catch (e) {
       showErrorMessage(e.toString());

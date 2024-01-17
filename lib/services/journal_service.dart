@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:pkl_apps/data/journal_model.dart';
-import 'package:pkl_apps/data/meta_model.dart';
+import 'package:pkl_apps/data/meta.dart';
 import 'package:pkl_apps/utils/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:pkl_apps/widgets/loading.dart';
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
 
 class JournalService extends SharedApi {
@@ -20,7 +21,8 @@ class JournalService extends SharedApi {
     }
   }
 
-  Future<MetaModel> postJournal(String kegiatan, File bukti) async {
+  Future<Meta> postJournal(String kegiatan, File bukti) async {
+    showLoading();
     try {
       Uri uri = Uri.parse("${super.baseUrl}journal");
 
@@ -38,12 +40,14 @@ class JournalService extends SharedApi {
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
       var responseJson = jsonDecode(responseBody);
-      return MetaModel(
+      stopLoading();
+      return Meta(
           status: responseJson['code'] ?? responseJson['meta']['code'] ?? 400,
           message: responseJson['message'] ?? responseJson['meta']['message']);
-    } on Exception catch (_) {
-      showErrorMessage("Periksa koneksi internet anda!");
-      throw Exception("Periksa koneksi internet anda!");
+    } on Exception catch (e) {
+      stopLoading();
+      showErrorMessage("Error : $e");
+      throw Exception("ERROR : $e");
     }
   }
 }

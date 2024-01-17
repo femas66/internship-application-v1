@@ -360,14 +360,12 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                 if (kegiatanController.text.length < 100) {
                   showErrorMessage("Kegiatan minimal 100 karakter");
                 } else {
-                  showLoading();
                   journal
                       .postJournal(
                     kegiatanController.text,
                     selectedFile!,
                   )
                       .then((value) {
-                    stopLoading();
                     if (value.status == 200) {
                       showSuccessMessage("Berhasil mengirim jurnal");
                       Navigator.pushNamed(

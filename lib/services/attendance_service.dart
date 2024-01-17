@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:pkl_apps/data/attendance_model.dart';
-import 'package:pkl_apps/data/meta_model.dart';
+import 'package:pkl_apps/data/meta.dart';
 import 'package:pkl_apps/utils/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:pkl_apps/widgets/message/errorMessage.dart';
@@ -32,8 +32,8 @@ class AttendanceService extends SharedApi {
     }
   }
 
-  Future<MetaModel> postPermission(String dari, String sampai,
-      String keterangan, String deskripsi, File bukti) async {
+  Future<Meta> postPermission(String dari, String sampai, String keterangan,
+      String deskripsi, File bukti) async {
     try {
       Uri uri = Uri.parse("${super.baseUrl}permission");
 
@@ -54,7 +54,7 @@ class AttendanceService extends SharedApi {
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
       var responseJson = jsonDecode(responseBody)['meta'];
-      return MetaModel(
+      return Meta(
           status: responseJson['code'], message: responseJson['message']);
     } on Exception catch (_) {
       showErrorMessage("Periksa koneksi internet anda!");
