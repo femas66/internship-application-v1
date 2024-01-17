@@ -14,6 +14,7 @@ import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
+import 'package:pkl_apps/modules/profile/statement_letter_screen.dart';
 import 'package:pkl_apps/modules/splash/splash_screen.dart';
 import 'package:pkl_apps/utils/firebase_api.dart';
 
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName: (context) => const HomeScreen(),
         UploadJournalScreen.routeName: (context) => const UploadJournalScreen(),
         JournalDetailScreen.routeName: (context) => const JournalDetailScreen(),
-        PermissionFormScreen.routeName: (context) => const PermissionFormScreen(),
+        PermissionFormScreen.routeName: (context) =>
+            const PermissionFormScreen(),
         ListAttendanceScreen.routeName: (context) =>
             const ListAttendanceScreen(),
         ListJournalScreen.routeName: (context) => const ListJournalScreen(),
@@ -56,6 +58,7 @@ class MyApp extends StatelessWidget {
         EditProfileScreen.routeName: (context) => const EditProfileScreen(),
         ListNotificationScreen.routeName: (context) =>
             const ListNotificationScreen(),
+        StatementLetterScreen.routeName: (context) => const StatementLetterScreen()
       },
     );
   }

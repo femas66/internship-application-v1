@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
+import 'package:pkl_apps/modules/profile/statement_letter_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = '/profile-screen';
@@ -251,19 +252,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Container(
-                      width: 186,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF389BD6),
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Center(
-                        child: Text(
-                          "Cek Surat Peringatan",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
+                    child: InkWell(
+                      onTap: () => Navigator.pushNamed(
+                          context, StatementLetterScreen.routeName),
+                      child: Container(
+                        width: 186,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF389BD6),
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Center(
+                          child: Text(
+                            "Cek Surat Peringatan",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
                     ),
