@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pkl_apps/data/journal_model.dart';
+import 'package:pkl_apps/data/journal.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
@@ -27,7 +27,7 @@ class _JournalDetailScreenState extends State<JournalDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final journal = ModalRoute.of(context)!.settings.arguments as JournalModel;
+    final journal = ModalRoute.of(context)!.settings.arguments as Journal;
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: PreferredSize(

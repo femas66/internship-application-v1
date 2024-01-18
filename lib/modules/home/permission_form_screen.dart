@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
@@ -498,8 +499,8 @@ class _PermissionFormScreenState extends State<PermissionFormScreen> {
                   stopLoading();
                   if (value.status == 200) {
                     showSuccessMessage("Berhasil membuat permintaan izin");
-                    Navigator.pushReplacementNamed(
-                        context, HomeScreen.routeName);
+                    Navigation.replaceUntilNamed(
+                        routeName: HomeScreen.routeName);
                   } else {
                     showErrorMessage(value.message as String);
                   }

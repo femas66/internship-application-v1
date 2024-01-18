@@ -80,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: AppBar(
+            automaticallyImplyLeading: false,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
@@ -728,12 +729,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Center(
                               child: Text("Error: ${snapshot.error}"),
                             );
-                          } else if (!snapshot.hasData ||
-                              snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text("No data available"),
-                            );
                           } else {
+                            if (snapshot.data!.isEmpty) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 60, bottom: 24),
+                                    child: Image.asset(
+                                      'assets/icons/no-journal.png',
+                                      width: 100,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Data Jurnal Kosong",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF4A4A4A)),
+                                  )
+                                ],
+                              );
+                            }
                             final dataJournal = snapshot.data!;
                             return ListView.builder(
                               shrinkWrap: true,
@@ -785,7 +804,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14,
                                                     fontWeight:
-                                                        FontWeight.w500),
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                             const SizedBox(
@@ -794,7 +813,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                itemJournal.activity,
+                                                itemJournal.activity != 'Kosong'
+                                                    ? itemJournal.activity
+                                                    : "Data jurnal kosong, anda tidak mengisi jurnal ",
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.poppins(
@@ -808,30 +829,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Row(
                                               children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    Navigator.pushNamed(
-                                                      context,
-                                                      JournalDetailScreen
-                                                          .routeName,
-                                                      arguments: itemJournal,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6),
-                                                      color: const Color(
-                                                          0x10389BD6),
-                                                    ),
-                                                    width: 30,
-                                                    height: 30,
-                                                    child: const Icon(
-                                                      Icons
-                                                          .remove_red_eye_outlined,
-                                                      color: Color(0xFF389BD6),
-                                                      size: 20,
+                                                Visibility(
+                                                  visible:
+                                                      itemJournal.activity !=
+                                                          "Kosong",
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Navigator.pushNamed(
+                                                        context,
+                                                        JournalDetailScreen
+                                                            .routeName,
+                                                        arguments: itemJournal,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6),
+                                                        color: const Color(
+                                                            0x10389BD6),
+                                                      ),
+                                                      width: 30,
+                                                      height: 30,
+                                                      child: const Icon(
+                                                        Icons
+                                                            .remove_red_eye_outlined,
+                                                        color:
+                                                            Color(0xFF389BD6),
+                                                        size: 20,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -879,8 +906,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(
                                           width: 100,
-                                          child: Image.network(
-                                              (itemJournal.image))),
+                                          child: itemJournal.image == null
+                                              ? Image.asset(
+                                                  'assets/icons/not-submit-journal.png')
+                                              : Image.network(
+                                                  (itemJournal.image))),
                                     ],
                                   ),
                                 );

@@ -3,8 +3,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/commons/style.dart';
-import 'package:pkl_apps/data/journal_model.dart';
+import 'package:pkl_apps/data/journal.dart';
+import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
@@ -54,8 +56,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final journalArgs =
-        ModalRoute.of(context)!.settings.arguments as JournalModel;
+    final journalArgs = ModalRoute.of(context)!.settings.arguments as Journal;
     kegiatanController.text = journalArgs.activity.toString();
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -195,30 +196,15 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Kegiatan",
-                  style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF32344D)),
-                ),
-                Text(
-                  "Jumlah Karakter : ${kegiatanController.text.length}",
-                  style: GoogleFonts.poppins(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF909090)),
-                ),
-              ],
+            child: Text(
+              "Kegiatan",
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF32344D)),
             ),
           ),
           TextField(
-            onChanged: (value) => setState(() {
-              kegiatanController.text;
-            }),
             controller: kegiatanController,
             decoration:
                 const InputDecoration(hintText: "Kegiatan yang kamu lakukan"),
@@ -357,26 +343,20 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
           ),
           InkWell(
             onTap: () {
-              if (selectedFile == null || kegiatanController.text.isEmpty) {
+              if (kegiatanController.text.isEmpty) {
                 showErrorMessage("Wajib di isi semua!");
               } else {
                 if (kegiatanController.text.length < 100) {
                   showErrorMessage("Kegiatan minimal 100 karakter");
                 } else {
-                  showLoading();
                   journal
-                      .postJournal(
-                    kegiatanController.text,
-                    selectedFile!,
-                  )
+                      .updateJournal(
+                          kegiatanController.text, selectedFile, journalArgs.id)
                       .then((value) {
-                    stopLoading();
                     if (value.status == 200) {
-                      showSuccessMessage("Berhasil mengirim jurnal");
-                      Navigator.pushNamed(
-                        context,
-                        ListJournalScreen.routeName,
-                      );
+                      showSuccessMessage(value.message.toString());
+                      Navigation.replaceUntilNamed(
+                          routeName: HomeScreen.routeName);
                     } else {
                       showErrorMessage(value.message.toString());
                     }

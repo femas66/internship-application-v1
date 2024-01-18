@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/firebase_options.dart';
 import 'package:pkl_apps/modules/attendance/list_attendance_screen.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
@@ -12,6 +13,7 @@ import 'package:pkl_apps/modules/journal/journal_detail_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/journal/upload_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/detail_notification_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
@@ -61,8 +63,10 @@ class MyApp extends StatelessWidget {
         ListNotificationScreen.routeName: (context) =>
             const ListNotificationScreen(),
         StatementLetterScreen.routeName: (context) =>
-            const StatementLetterScreen()
+            const StatementLetterScreen(),
+        DetailNotification.routeName: (context) => const DetailNotification(),
       },
+      navigatorKey: navigatorKey,
     );
   }
 }

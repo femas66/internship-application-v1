@@ -83,48 +83,26 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data!.isEmpty) {
-                        return Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                            color: whiteColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: shadowColor,
-                                offset: Offset(
-                                  5.0,
-                                  5.0,
-                                ),
-                                blurRadius: 10.0,
-                                spreadRadius: 2.0,
-                              ), //BoxShadow
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(0.0, 0.0),
-                                blurRadius: 0.0,
-                                spreadRadius: 0.0,
-                              ), //BoxShadow
-                            ],
-                          ),
-                          padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
-                          margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      "Anda belum absen tab",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(top: 60, bottom: 24),
+                              child: Image.asset(
+                                'assets/icons/no-attendance.png',
+                                width: 140,
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              "Data Absensi Masih Kosong",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF4A4A4A)),
+                            )
+                          ],
                         );
                       } else {
                         return ListView.builder(
@@ -243,7 +221,8 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                 subItem.status.toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12,
-                                                    color: const Color(0xFF0EAD00),
+                                                    color:
+                                                        const Color(0xFF0EAD00),
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -278,8 +257,10 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                       ), //BoxShadow
                                     ],
                                   ),
-                                  padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                  margin: const EdgeInsets.fromLTRB(22, 0, 22, 12),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(22, 0, 22, 12),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -292,7 +273,8 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                                   Radius.circular(6)),
                                               color: primaryBlue,
                                             ),
-                                            margin: const EdgeInsets.only(left: 6),
+                                            margin:
+                                                const EdgeInsets.only(left: 6),
                                             width: 40,
                                             height: 40,
                                             child: Center(
@@ -323,8 +305,8 @@ class _ListAttendanceScreenState extends State<ListAttendanceScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(12)),
                                         margin: const EdgeInsets.only(right: 6),
-                                        padding:
-                                            const EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            16, 6, 16, 6),
                                         child: Center(
                                           child: Text(
                                             item.status.toString(),

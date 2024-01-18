@@ -18,13 +18,31 @@ class ListJournalScreen extends StatefulWidget {
 
 class _ListJournalScreenState extends State<ListJournalScreen> {
   late JournalService journalService;
-  late Future<List<dynamic>> futureListJournal;
+
+  DateTime? filterDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != filterDate) {
+      setState(() {
+        filterDate = picked;
+      });
+    } else {
+      setState(() {
+        filterDate = null;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     journalService = JournalService();
-    futureListJournal = journalService.getJournal(limit: "250");
   }
 
   final box = GetStorage();
@@ -51,8 +69,8 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(6),
-                        border:
-                            Border.all(color: const Color(0xFF389BD6), width: 1.5)),
+                        border: Border.all(
+                            color: const Color(0xFF389BD6), width: 1.5)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -96,12 +114,17 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(color: const Color(0xFF389BD6))),
                       child: Row(children: [
-                        Text(
-                          "yyyy-mm-dd",
-                          style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF32344D)),
+                        InkWell(
+                          onTap: () => _selectDate(context),
+                          child: Text(
+                            (filterDate != null)
+                                ? '${filterDate!.toLocal()}'.split(' ')[0]
+                                : "yyyy-mm-dd",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF32344D)),
+                          ),
                         ),
                         const SizedBox(
                           width: 12,
@@ -117,7 +140,11 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                 height: 24,
               ),
               FutureBuilder(
-                  future: futureListJournal,
+                  future: journalService.getJournal(
+                      limit: "250",
+                      date: filterDate != null
+                          ? '${filterDate!.toLocal()}'.split(' ')[0]
+                          : null),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -127,11 +154,30 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                       return Center(
                         child: Text("Error: ${snapshot.error}"),
                       );
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(
-                        child: Text("No data available"),
-                      );
                     } else {
+                      if (snapshot.data!.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(top: 60, bottom: 24),
+                              child: Image.asset(
+                                'assets/icons/no-journal.png',
+                                width: 100,
+                              ),
+                            ),
+                            Text(
+                              "Data Jurnal Kosong",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF4A4A4A)),
+                            )
+                          ],
+                        );
+                      }
                       final dataJournal = snapshot.data!;
                       return ListView.builder(
                         shrinkWrap: true,
@@ -178,7 +224,7 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                           itemJournal.date.toString(),
                                           style: GoogleFonts.poppins(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       const SizedBox(
@@ -187,7 +233,9 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          itemJournal.activity,
+                                          itemJournal.activity != 'Kosong'
+                                              ? itemJournal.activity
+                                              : "Data jurnal kosong, anda tidak mengisi jurnal ",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.poppins(
@@ -200,26 +248,31 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                JournalDetailScreen.routeName,
-                                                arguments: itemJournal,
-                                              );
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                                color: const Color(0x10389BD6),
-                                              ),
-                                              width: 30,
-                                              height: 30,
-                                              child: const Icon(
-                                                Icons.remove_red_eye_outlined,
-                                                color: Color(0xFF389BD6),
-                                                size: 20,
+                                          Visibility(
+                                            visible: itemJournal.activity !=
+                                                "Kosong",
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  JournalDetailScreen.routeName,
+                                                  arguments: itemJournal,
+                                                );
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                  color:
+                                                      const Color(0x10389BD6),
+                                                ),
+                                                width: 30,
+                                                height: 30,
+                                                child: const Icon(
+                                                  Icons.remove_red_eye_outlined,
+                                                  color: Color(0xFF389BD6),
+                                                  size: 20,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -238,7 +291,8 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(6),
-                                                  color: const Color(0x10FFC412),
+                                                  color:
+                                                      const Color(0x10FFC412),
                                                 ),
                                                 width: 30,
                                                 height: 30,
@@ -260,7 +314,10 @@ class _ListJournalScreenState extends State<ListJournalScreen> {
                                 ),
                                 SizedBox(
                                     width: 100,
-                                    child: Image.network((itemJournal.image))),
+                                    child: itemJournal.image == null
+                                        ? Image.asset(
+                                            'assets/icons/not-submit-journal.png')
+                                        : Image.network((itemJournal.image))),
                               ],
                             ),
                           );

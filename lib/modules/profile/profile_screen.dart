@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pkl_apps/data/profile.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
+import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/profile/edit_profile_screen.dart';
 import 'package:pkl_apps/modules/profile/statement_letter_screen.dart';
 import 'package:pkl_apps/services/profile/profile_service.dart';
@@ -18,12 +19,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final box = GetStorage();
 
   late ProfileService profileService;
-  late Future<Profile> futureProfile;
 
   @override
   void initState() {
     profileService = ProfileService();
-    futureProfile = profileService.getProfile();
     super.initState();
   }
 
@@ -50,7 +49,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        Navigation.replaceUntilNamed(
+                            routeName: HomeScreen.routeName);
+                      },
                       child: const Padding(
                         padding: EdgeInsets.only(left: 8.0),
                         child: Icon(Icons.arrow_back),
@@ -74,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 22,
               ),
               FutureBuilder(
-                  future: futureProfile,
+                  future: profileService.getProfile(),
                   builder: (((context, snapshot) {
                     if (snapshot.hasData) {
                       final item = snapshot.data!;
@@ -201,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       color: const Color(0xFF389BD6), width: 1),
                                 ),
                                 child: Text(
-                                  "SP : ${item.sp}",
+                                  "${item.sp}",
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: const Color(0xFF32344D),

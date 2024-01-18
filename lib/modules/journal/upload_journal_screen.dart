@@ -3,7 +3,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/commons/style.dart';
+import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
@@ -339,7 +341,7 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                     width: 12,
                   ),
                   Text(
-                    "Tambah bukti",
+                    (selectedFile == null) ? "Tambah bukti" : "Ganti bukti",
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -367,11 +369,8 @@ class _UploadJournalScreenState extends State<UploadJournalScreen> {
                   )
                       .then((value) {
                     if (value.status == 200) {
-                      showSuccessMessage("Berhasil mengirim jurnal");
-                      Navigator.pushNamed(
-                        context,
-                        ListJournalScreen.routeName,
-                      );
+                      showSuccessMessage(value.message.toString());
+                      Navigation.replaceNamed(routeName: HomeScreen.routeName);
                     } else {
                       showErrorMessage(value.message.toString());
                     }

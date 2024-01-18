@@ -1,7 +1,8 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:pkl_apps/base/common/app_config.dart';
 
 class SharedApi {
-  final String baseUrl = "https://pkl.hummatech.com/api/";
+  final String baseUrl = AppConfig.baseUrl;
   Map<String, String>? getToken() {
     final box = GetStorage();
     String? token = box.read("token");

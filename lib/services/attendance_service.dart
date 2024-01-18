@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:pkl_apps/data/attendance_model.dart';
+import 'package:pkl_apps/data/entities/attendance_response.dart';
 import 'package:pkl_apps/data/meta.dart';
 import 'package:pkl_apps/utils/api.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +13,9 @@ class AttendanceService extends SharedApi {
       Uri uri = Uri.parse("${super.baseUrl}attendance");
       final response = await http.get(uri, headers: super.getToken());
       final responseJson = jsonDecode(response.body)['data'];
-      return responseJson.map((e) => AttendanceModel.fromJson(e)).toList();
+      return responseJson
+          .map((e) => AttendanceResponse.fromJson(e).toAttendance())
+          .toList();
     } on Exception catch (_) {
       showErrorMessage("Tidak ada internet");
       throw Exception("Tidak ada internet");
@@ -25,7 +27,9 @@ class AttendanceService extends SharedApi {
       Uri uri = Uri.parse("${super.baseUrl}attendance-today");
       final response = await http.get(uri, headers: super.getToken());
       final responseJson = jsonDecode(response.body)['data'];
-      return responseJson.map((e) => AttendanceModel.fromJson(e)).toList();
+      return responseJson
+          .map((e) => AttendanceResponse.fromJson(e).toAttendance())
+          .toList();
     } on Exception catch (_) {
       showErrorMessage("Tidak ada internet");
       throw Exception("Tidak ada internet");

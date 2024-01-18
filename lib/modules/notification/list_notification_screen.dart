@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
+import 'package:pkl_apps/modules/notification/detail_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';
 import 'package:pkl_apps/services/auth/login_service.dart';
 import 'package:pkl_apps/services/notification/notification_service.dart';
@@ -160,57 +162,141 @@ class _ListNotificationScreenState extends State<ListNotificationScreen> {
                 future: futureListNotification,
                 builder: (((context, snapshot) {
                   if (snapshot.hasData) {
+                    if (snapshot.data!.isEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 60, bottom: 24),
+                            child: Image.asset(
+                              'assets/icons/no-notification.png',
+                              width: 100,
+                            ),
+                          ),
+                          Text(
+                            "Tidak Ada Pesan Notifikasi",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF4A4A4A)),
+                          )
+                        ],
+                      );
+                    }
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final item = snapshot.data![index];
-                          return Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFC3E9FF),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                          if (item.readAt != null) {
+                            return InkWell(
+                              onTap: () => Navigation.toNamed(
+                                  routeName: DetailNotification.routeName,
+                                  arguments: item.id),
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFEFEFEF),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Column(
                                   children: [
-                                    Text(
-                                      item.title,
-                                      style: GoogleFonts.poppins(
-                                          color: const Color(0xFF32344D),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item.title,
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF7A7A7A),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          item.createdAt,
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFFA8A8A8),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      item.createdAt,
-                                      style: GoogleFonts.poppins(
-                                          color: const Color(0xFF32344D),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item.message,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: const Color(0xFFB5B5B5)),
+                                      ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 12,
+                              ),
+                            );
+                          } else {
+                            return InkWell(
+                              onTap: () {
+                                Navigation.toNamed(
+                                    routeName: DetailNotification.routeName,
+                                    arguments: item.id);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFC3E9FF),
+                                  borderRadius: BorderRadius.circular(6),
                                 ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    item.message,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: const Color(0xFF555555)),
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item.title,
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF32344D),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          item.createdAt,
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF32344D),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item.message,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: const Color(0xFF555555)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          );
+                              ),
+                            );
+                          }
                         });
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {

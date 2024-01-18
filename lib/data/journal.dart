@@ -7,7 +7,7 @@ part 'journal.g.dart';
 @freezed
 class Journal with _$Journal {
   const factory Journal({
-    required int? id,
+    required int id,
     required Student student,
     String? date,
     String? activity,
