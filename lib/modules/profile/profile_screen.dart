@@ -126,11 +126,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               bottom: 0,
                                               right: 0,
                                               child: InkWell(
-                                                onTap: () =>
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        EditProfileScreen
-                                                            .routeName),
+                                                onTap: () => Navigation.toNamed(
+                                                    routeName: EditProfileScreen
+                                                        .routeName,
+                                                    arguments: {
+                                                      "photo": item.photo,
+                                                      "no": item.phoneNumber,
+                                                    }),
                                                 child: Container(
                                                     padding:
                                                         const EdgeInsets.all(4),
@@ -198,15 +200,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 padding: const EdgeInsets.fromLTRB(6, 3, 6, 3),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: const Color(0xFFBFE7FF),
+                                  color: (item.sp == 'SP : -')
+                                      ? const Color(0x50BEBEBE)
+                                      : (item.sp == 'SP 1')
+                                          ? const Color(0xFF9BCCEA)
+                                          : (item.sp == 'SP 2')
+                                              ? const Color(0x10FFC412)
+                                              : const Color(0xFFF7B2B9),
                                   border: Border.all(
-                                      color: const Color(0xFF389BD6), width: 1),
+                                      color: (item.sp == 'SP : -')
+                                          ? const Color(0xFF32344D)
+                                          : (item.sp == 'SP 1')
+                                              ? const Color(0xFF389BD6)
+                                              : (item.sp == 'SP 2')
+                                                  ? const Color(0xFFFFC412)
+                                                  : const Color(0xFFE82135),
+                                      width: 1),
                                 ),
                                 child: Text(
-                                  "${item.sp}",
+                                  item.sp,
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
-                                      color: const Color(0xFF32344D),
+                                      color: (item.sp == 'SP : -')
+                                          ? const Color(0xFF32344D)
+                                          : (item.sp == 'SP 1')
+                                              ? const Color(0xFF389BD6)
+                                              : (item.sp == 'SP 2')
+                                                  ? const Color(0xFFFFC412)
+                                                  : const Color(0xFFE82135),
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),

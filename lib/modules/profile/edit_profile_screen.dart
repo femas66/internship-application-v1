@@ -4,6 +4,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pkl_apps/base/router/navigation.dart';
+import 'package:pkl_apps/modules/profile/profile_screen.dart';
+import 'package:pkl_apps/services/profile/profile_service.dart';
+import 'package:pkl_apps/widgets/message/errorMessage.dart';
+import 'package:pkl_apps/widgets/message/successMessage.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String routeName = '/edit-profile-screen';
@@ -15,6 +20,15 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final box = GetStorage();
+
+  late ProfileService profileService;
+
+  @override
+  void initState() {
+    super.initState();
+
+    profileService = ProfileService();
+  }
 
   File? selectedFile;
 
@@ -31,8 +45,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  TextEditingController noController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final argument =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final photoArgs = argument['photo'];
+    final noArgs = argument['no'];
+    noController.text = noArgs;
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -106,11 +127,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     Border.all(color: Colors.white, width: 4),
                               ),
                               child: ClipOval(
-                                child: Image.network(
-                                  box.read('photo'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                                  child: selectedFile == null
+                                      ? Image.network(
+                                          photoArgs,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.file(
+                                          selectedFile as File,
+                                          fit: BoxFit.cover,
+                                        )),
                             ),
                           ),
                           const Spacer(),
@@ -201,36 +226,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 40,
                       child: TextField(
+                        controller: noController,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
                           hintText: "04727427247",
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(width: 2, color: Color(0xFF068DDC)),
+                            borderSide: const BorderSide(
+                                width: 2, color: Color(0xFF068DDC)),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(width: 2, color: Color(0xFF068DDC)),
+                            borderSide: const BorderSide(
+                                width: 2, color: Color(0xFF068DDC)),
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 24),
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF389BD6),
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Center(
-                        child: Text(
-                          "Simpan",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
+                    InkWell(
+                      onTap: () => profileService
+                          .updateProfile(noController.text, selectedFile)
+                          .then((value) {
+                        if (value.status == 200) {
+                          showSuccessMessage(value.message.toString());
+                          Navigation.replaceUntilNamed(
+                              routeName: ProfileScreen.routeName);
+                        } else {
+                          showErrorMessage(value.message.toString());
+                        }
+                      }),
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 24),
+                        width: double.infinity,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF389BD6),
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Center(
+                          child: Text(
+                            "Simpan",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
                     ),

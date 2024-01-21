@@ -20,7 +20,7 @@ Journal _$JournalFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Journal {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   Student get student => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   String? get activity => throw _privateConstructorUsedError;
@@ -37,11 +37,7 @@ abstract class $JournalCopyWith<$Res> {
       _$JournalCopyWithImpl<$Res, Journal>;
   @useResult
   $Res call(
-      {int? id,
-      Student student,
-      String? date,
-      String? activity,
-      String? image});
+      {int id, Student student, String? date, String? activity, String? image});
 
   $StudentCopyWith<$Res> get student;
 }
@@ -59,17 +55,17 @@ class _$JournalCopyWithImpl<$Res, $Val extends Journal>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? student = null,
     Object? date = freezed,
     Object? activity = freezed,
     Object? image = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       student: null == student
           ? _value.student
           : student // ignore: cast_nullable_to_non_nullable
@@ -106,11 +102,7 @@ abstract class _$$JournalImplCopyWith<$Res> implements $JournalCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
-      Student student,
-      String? date,
-      String? activity,
-      String? image});
+      {int id, Student student, String? date, String? activity, String? image});
 
   @override
   $StudentCopyWith<$Res> get student;
@@ -127,17 +119,17 @@ class __$$JournalImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? student = null,
     Object? date = freezed,
     Object? activity = freezed,
     Object? image = freezed,
   }) {
     return _then(_$JournalImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       student: null == student
           ? _value.student
           : student // ignore: cast_nullable_to_non_nullable
@@ -172,7 +164,7 @@ class _$JournalImpl implements _Journal {
       _$$JournalImplFromJson(json);
 
   @override
-  final int? id;
+  final int id;
   @override
   final Student student;
   @override
@@ -221,7 +213,7 @@ class _$JournalImpl implements _Journal {
 
 abstract class _Journal implements Journal {
   const factory _Journal(
-      {required final int? id,
+      {required final int id,
       required final Student student,
       final String? date,
       final String? activity,
@@ -230,7 +222,7 @@ abstract class _Journal implements Journal {
   factory _Journal.fromJson(Map<String, dynamic> json) = _$JournalImpl.fromJson;
 
   @override
-  int? get id;
+  int get id;
   @override
   Student get student;
   @override

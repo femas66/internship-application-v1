@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pkl_apps/base/router/navigation.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
-import 'package:pkl_apps/modules/journal/list_journal_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
 import 'package:pkl_apps/modules/notification/list_notification_screen.dart';
 import 'package:pkl_apps/modules/profile/profile_screen.dart';

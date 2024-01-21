@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pkl_apps/base/common/app_config.dart';
 import 'package:pkl_apps/commons/style.dart';
 import 'package:pkl_apps/modules/home/home_screen.dart';
 import 'package:pkl_apps/modules/login/login_screen.dart';
