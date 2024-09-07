@@ -1,6 +1,12 @@
-# pkl_apps
+# Internship Application
 
-A new Flutter project.
+Aplikasi magang untuk siswa dan mentor
+
+## Version History
+
+* 1.0
+    * Initial Release
+
 
 ## Getting Started
 
